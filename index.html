@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" data-lights="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kogent — Context for the agentic engineering era</title>
+<meta name="description" content="Kogent builds solutions for knowledge work in the agentic engineering era — supplying the context that lets software factories run lights-out.">
+<meta property="og:title" content="Kogent — Context for the agentic engineering era">
+<meta property="og:description" content="The dark factory stops for one thing: context. Kogent supplies it, so your software factory runs lights-out.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kogent.ai/">
+<link rel="icon" href="/favicon.ico">
+<script>
+  try {
+    var pref = localStorage.getItem("kogent-lights");
+    if (pref === "on" || pref === "off") document.documentElement.dataset.lights = pref;
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B101B;
+    --bg-raised: #10192B;
+    --text: #E9EDF5;
+    --muted: #93A0B4;
+    --hairline: rgba(233, 237, 245, 0.13);
+    --accent: #2F66D3;
+    --accent-bright: #6E9BFF;
+    --tungsten: #F2A93B;
+    --cone-opacity: 1;
+    --button: #2F66D3;
+    --button-hover: #3B74E8;
+  }
+  html[data-lights="on"] {
+    --bg: #EEF1F5;
+    --bg-raised: #FFFFFF;
+    --text: #141D2C;
+    --muted: #5B6678;
+    --hairline: rgba(20, 29, 44, 0.15);
+    --accent-bright: #2F66D3;
+    --cone-opacity: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Poppins", system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .mono {
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+    transition: background-color 0.5s ease;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .wordmark img { display: block; }
+  .wordmark span {
+    font-weight: 600;
+    font-size: 1.02rem;
+    letter-spacing: 0.01em;
+  }
+
+  .lights {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 0;
+    color: var(--muted);
+  }
+  .lights .lights-word {
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .lights-track {
+    display: inline-block;
+    width: 2.4rem;
+    height: 1.3rem;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    position: relative;
+    transition: border-color 0.3s ease;
+  }
+  .lights-dot {
+    position: absolute;
+    top: 50%;
+    left: 0.2rem;
+    transform: translateY(-50%);
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: #3A4353;
+    transition: left 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  html[data-lights="on"] .lights-dot {
+    left: calc(100% - 1rem);
+    background: var(--tungsten);
+    box-shadow: 0 0 10px 2px rgba(242, 169, 59, 0.55);
+  }
+  .lights:hover .lights-track { border-color: var(--muted); }
+  .lights:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    padding: clamp(5rem, 14vh, 9rem) 0 clamp(4rem, 10vh, 6.5rem);
+    border-bottom: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(90% 75% at 50% -12%,
+      rgba(110, 155, 255, 0.17),
+      rgba(110, 155, 255, 0.05) 45%,
+      transparent 72%);
+    opacity: var(--cone-opacity);
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+  .hero .container { position: relative; }
+
+  .eyebrow { margin-bottom: 1.4rem; }
+  .eyebrow .sep { color: var(--accent-bright); }
+
+  .editorial {
+    font-family: "Newsreader", Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  h1 {
+    font-family: "Newsreader", Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: clamp(2.6rem, 7vw, 4.8rem);
+    font-weight: 480;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    max-width: 21ch;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent-bright);
+  }
+
+  .hero .lede {
+    margin-top: 1.7rem;
+    max-width: 50ch;
+    font-family: "Newsreader", Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: clamp(1.15rem, 1.8vw, 1.32rem);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .cta-row {
+    margin-top: 2.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--button);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.78rem 1.7rem;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  .btn:hover { background: var(--button-hover); transform: translateY(-1px); }
+  .btn:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+  .quiet-link {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 2px;
+    transition: border-color 0.2s ease;
+  }
+  .quiet-link:hover { border-color: var(--accent-bright); }
+
+  .floor-status {
+    margin-top: clamp(3rem, 8vh, 5rem);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .floor-status .pip {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-bright);
+    box-shadow: 0 0 8px 1px rgba(110, 155, 255, 0.6);
+    flex: none;
+  }
+  html[data-lights="on"] .floor-status .pip {
+    background: var(--tungsten);
+    box-shadow: 0 0 8px 1px rgba(242, 169, 59, 0.55);
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: clamp(4rem, 10vw, 6.5rem) 0; }
+
+  .split {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+  }
+  .split .label { padding-top: 0.5rem; }
+
+  h2 {
+    font-family: "Newsreader", Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    max-width: 24ch;
+  }
+  .prose {
+    margin-top: 1.3rem;
+    max-width: 58ch;
+    font-family: "Newsreader", Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: 1.16rem;
+    line-height: 1.62;
+    color: var(--muted);
+  }
+  .prose + .prose { margin-top: 1rem; }
+  .prose strong { color: var(--text); font-weight: 560; }
+
+  .shift { border-bottom: 1px solid var(--hairline); }
+
+  /* ---------- offerings ---------- */
+  .build { border-bottom: 1px solid var(--hairline); }
+  .cards {
+    margin-top: 2.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.1rem;
+  }
+  .card {
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    background: var(--bg-raised);
+    padding: 1.7rem 1.5rem 1.9rem;
+    transition: background-color 0.5s ease, border-color 0.3s ease;
+  }
+  .card:hover { border-color: color-mix(in srgb, var(--accent-bright) 45%, var(--hairline)); }
+  .card .mono { color: var(--accent-bright); }
+  .card h3 {
+    margin-top: 0.9rem;
+    font-family: "Newsreader", Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: 1.32rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .card p {
+    margin-top: 0.7rem;
+    font-size: 0.96rem;
+    color: var(--muted);
+  }
+
+  /* ---------- contact ---------- */
+  .contact { text-align: left; }
+  .contact .prose { max-width: 52ch; }
+  .contact .btn { margin-top: 1.9rem; }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 1.6rem 0 2rem;
+  }
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .foot .wordmark span { font-size: 0.92rem; }
+
+  /* ---------- load animation ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero::before { animation: warmup 1.4s ease both; }
+    .hero .eyebrow, .hero h1, .hero p, .hero .cta-row, .hero .floor-status {
+      animation: rise 0.7s ease both;
+    }
+    .hero h1 { animation-delay: 0.08s; }
+    .hero p { animation-delay: 0.16s; }
+    .hero .cta-row { animation-delay: 0.24s; }
+    .hero .floor-status { animation-delay: 0.4s; }
+    @keyframes warmup {
+      from { opacity: 0; }
+      to { opacity: var(--cone-opacity); }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+
+  @media (max-width: 840px) {
+    .cards { grid-template-columns: 1fr; }
+    .split { grid-template-columns: 1fr; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container bar">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="24" height="27">
+      <span>Kogent</span>
+    </a>
+    <button class="lights" id="lights" aria-pressed="false" aria-label="Turn the factory lights on">
+      <span class="lights-word">Lights</span>
+      <span class="lights-track"><span class="lights-dot"></span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow mono">Knowledge work <span class="sep">·</span> agentic engineering era</p>
+      <h1>The dark factory stops for one thing: <em>context</em>.</h1>
+      <p class="lede">Kogent builds solutions for knowledge work in the agentic engineering era — and supplies the context that lets your software factory run lights-out.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:pratul@kogent.ai">Talk to us</a>
+        <a class="quiet-link" href="#what-we-build">What we build</a>
+      </div>
+      <p class="floor-status mono"><span class="pip" aria-hidden="true"></span><span id="floor-status">Lights off · the line is running</span></p>
+    </div>
+  </section>
+
+  <section class="shift">
+    <div class="container split">
+      <p class="label mono">The shift</p>
+      <div>
+        <h2>Software production is going&nbsp;dark.</h2>
+        <p class="prose">Fleets of coding agents now write, test, review, and ship around the clock while people move from the line to the control room. That's the <strong>dark factory pattern</strong> — and it fails in a predictable way. Not on broken tooling. On missing context.</p>
+        <p class="prose">Intent lives in one engineer's head. Decisions sit in chat scrollback. Domain knowledge leaves the building at six. Every gap becomes a question, and <strong>every question turns the lights back on</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="build" id="what-we-build">
+    <div class="container">
+      <p class="label mono">What we build</p>
+      <div class="cards">
+        <div class="card">
+          <p class="mono">Context supply</p>
+          <h3>Everything the factory needs to know</h3>
+          <p>We capture intent, decisions, constraints, and domain knowledge — and keep them current, in a form agents consume without asking a human.</p>
+        </div>
+        <div class="card">
+          <p class="mono">Knowledge work</p>
+          <h3>Tools for the work that stays human</h3>
+          <p>Setting direction, weighing trade-offs, judging what shipped: instruments for doing the thinking work at the pace of an agent fleet.</p>
+        </div>
+        <div class="card">
+          <p class="mono">Lights-out operations</p>
+          <h3>A factory that doesn't stop to ask</h3>
+          <p>Every contextual need of the solution handled end to end, so the pipeline keeps moving while you sleep.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <p class="label mono">Get in touch</p>
+      <h2 style="margin-top: 1rem;">Where does your factory still&nbsp;stop?</h2>
+      <p class="prose">Tell us where agents wait on people, and we'll show you what context can close.</p>
+      <a class="btn" href="mailto:pratul@kogent.ai">pratul@kogent.ai</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="18" height="20">
+      <span>Kogent</span>
+    </a>
+    <p class="mono">© 2026 Kogent · now building for the agentic engineering era</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var btn = document.getElementById("lights");
+    var status = document.getElementById("floor-status");
+    function render() {
+      var on = document.documentElement.dataset.lights === "on";
+      btn.setAttribute("aria-pressed", String(on));
+      btn.setAttribute("aria-label", on ? "Turn the factory lights off" : "Turn the factory lights on");
+      status.textContent = on ? "Lights on · welcome to the floor" : "Lights off · the line is running";
+    }
+    btn.addEventListener("click", function () {
+      var next = document.documentElement.dataset.lights === "on" ? "off" : "on";
+      document.documentElement.dataset.lights = next;
+      try { localStorage.setItem("kogent-lights", next); } catch (e) {}
+      render();
+    });
+    render();
+  })();
+</script>
+
+</body>
+</html>
