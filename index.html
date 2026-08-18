@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
 <title>Kogent · Context for the agentic engineering era</title>
-<meta name="description" content="Kogent builds solutions for knowledge work in the agentic engineering era. We supply the context and resolve the ambiguity that lets software factories run lights-out.">
+<meta name="description" content="Kogent builds solutions for knowledge work in the agentic engineering era. We supply the context that keeps a software factory running dark, and the instruments for the half that needs you: requirements, product direction, and the record.">
 <meta property="og:title" content="Kogent · Context for the agentic engineering era">
-<meta property="og:description" content="The dark factory stops for one thing: context. Kogent supplies it, so your software factory runs lights-out.">
+<meta property="og:description" content="The factory runs dark from intake to review. Kogent supplies the context that keeps it running, and the instruments for the half that needs you.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kogent.ai/">
 <link rel="icon" href="/favicon.ico">
@@ -30,6 +31,7 @@
     --accent-bright: #6E9BFF;
     --tungsten: #F2A93B;
     --cone-opacity: 1;
+    --wash-opacity: 0;
     --button: #2F66D3;
     --button-hover: #3B74E8;
   }
@@ -41,6 +43,7 @@
     --hairline: rgba(20, 29, 44, 0.15);
     --accent-bright: #2F66D3;
     --cone-opacity: 0;
+    --wash-opacity: 1;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -55,6 +58,25 @@
     line-height: 1.6;
     transition: background-color 0.5s ease, color 0.5s ease;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- mode swap ---------- */
+  html[data-lights="off"] [data-mode="on"],
+  html[data-lights="on"] [data-mode="off"] { display: none; }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: 0.45s; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .container {
@@ -106,11 +128,13 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    background: none;
-    border: none;
+    background: var(--bg-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
     cursor: pointer;
-    padding: 0.4rem 0;
-    color: var(--muted);
+    padding: 0.4rem 0.85rem;
+    color: var(--text);
+    transition: background-color 0.5s ease, border-color 0.3s ease;
   }
   .lights .lights-word {
     font-family: "Spline Sans Mono", ui-monospace, monospace;
@@ -144,11 +168,12 @@
     background: var(--tungsten);
     box-shadow: 0 0 10px 2px rgba(242, 169, 59, 0.55);
   }
+  .lights:hover { border-color: var(--muted); }
   .lights:hover .lights-track { border-color: var(--muted); }
   .lights:focus-visible {
     outline: 2px solid var(--accent-bright);
     outline-offset: 4px;
-    border-radius: 4px;
+    border-radius: 999px;
   }
 
   /* ---------- hero ---------- */
@@ -170,7 +195,19 @@
     transition: opacity 0.6s ease;
     pointer-events: none;
   }
-  .hero .container { position: relative; }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(90% 75% at 50% -12%,
+      rgba(242, 169, 59, 0.22),
+      rgba(242, 169, 59, 0.07) 45%,
+      transparent 72%);
+    opacity: var(--wash-opacity);
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+  .hero .container { position: relative; z-index: 1; }
 
   .eyebrow { margin-bottom: 1.4rem; }
   .eyebrow .sep { color: var(--accent-bright); }
@@ -226,6 +263,7 @@
   }
   .btn:hover { background: var(--button-hover); transform: translateY(-1px); }
   .btn:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+
   .quiet-link {
     color: var(--text);
     text-decoration: none;
@@ -234,7 +272,26 @@
     padding-bottom: 2px;
     transition: border-color 0.2s ease;
   }
+  button.quiet-link {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--hairline);
+    border-radius: 0;
+    font: inherit;
+    font-size: 0.95rem;
+    line-height: inherit;
+    cursor: pointer;
+    padding: 0 0 2px;
+    text-align: left;
+  }
   .quiet-link:hover { border-color: var(--accent-bright); }
+  .quiet-link:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 
   .floor-status {
     margin-top: clamp(3rem, 8vh, 5rem);
@@ -290,8 +347,39 @@
 
   /* ---------- offerings ---------- */
   .build { border-bottom: 1px solid var(--hairline); }
+
+  .bridge {
+    margin-top: 1.1rem;
+    max-width: 76ch;
+    font-family: "Newsreader", Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .link-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--hairline);
+    border-radius: 0;
+    font: inherit;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0 0 1px;
+    text-align: left;
+    transition: border-color 0.2s ease;
+  }
+  .link-btn:hover { border-color: var(--accent-bright); }
+  .link-btn:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
   .cards {
-    margin-top: 2.6rem;
+    margin-top: 2.2rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.1rem;
@@ -340,7 +428,7 @@
 
   /* ---------- load animation ---------- */
   @media (prefers-reduced-motion: no-preference) {
-    .hero::before { animation: warmup 1.4s ease both; }
+    .hero::before { animation: warmup 1.4s ease; }
     .hero .eyebrow, .hero h1, .hero p, .hero .cta-row, .hero .floor-status {
       animation: rise 0.7s ease both;
     }
@@ -356,15 +444,53 @@
       from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: none; }
     }
+
+    .lights.hint { animation: attract 3s ease-in-out infinite; }
+    .lights.hint .lights-dot { animation: dotglow 3s ease-in-out infinite; }
+    @keyframes attract {
+      0%, 100% { border-color: var(--hairline); }
+      50% { border-color: color-mix(in srgb, var(--accent-bright) 65%, var(--hairline)); }
+    }
+    @keyframes dotglow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(110, 155, 255, 0); }
+      50% { box-shadow: 0 0 10px 2px rgba(110, 155, 255, 0.55); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(root),
+    ::view-transition-new(root) { animation: none !important; }
   }
 
   @media (max-width: 840px) {
     .cards { grid-template-columns: 1fr; }
     .split { grid-template-columns: 1fr; gap: 1rem; }
   }
+
+  /* ---------- print ---------- */
+  @media print {
+    html[data-lights] {
+      --bg: #FFFFFF;
+      --bg-raised: #FFFFFF;
+      --text: #141D2C;
+      --muted: #3D4757;
+      --hairline: rgba(20, 29, 44, 0.28);
+      --accent-bright: #2F66D3;
+      --cone-opacity: 0;
+      --wash-opacity: 0;
+    }
+    body { background: #FFFFFF; color: #141D2C; }
+    header, .cta-row, .bridge { display: none !important; }
+    section { padding: 1.5rem 0; }
+    .hero { padding: 0 0 1.5rem; }
+    .card { break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
+
+<p class="sr-only" id="lights-announce" role="status" aria-live="polite"></p>
 
 <header>
   <div class="container bar">
@@ -372,7 +498,7 @@
       <img src="/logo.png" alt="" width="24" height="27">
       <span>Kogent</span>
     </a>
-    <button class="lights" id="lights" aria-pressed="false" aria-label="Turn the factory lights on">
+    <button class="lights" id="lights" data-lights-toggle aria-pressed="false" aria-label="Factory lights">
       <span class="lights-word">Lights</span>
       <span class="lights-track"><span class="lights-dot"></span></span>
     </button>
@@ -382,46 +508,93 @@
 <main>
   <section class="hero">
     <div class="container">
-      <p class="eyebrow mono">Knowledge work <span class="sep">·</span> agentic engineering era</p>
-      <h1>The dark factory stops for one thing: <em>context</em>.</h1>
-      <p class="lede">Kogent builds solutions for knowledge work in the agentic engineering era. We supply the <em>context</em> and resolve the <em>ambiguity</em>, so your software factory runs lights-out.</p>
+      <p class="eyebrow mono"><span data-mode="off">Knowledge work</span><span data-mode="on">Control room</span> <span class="sep">·</span> agentic engineering era</p>
+
+      <h1 data-mode="off">The dark factory stops for one thing: <em>context</em>.</h1>
+      <h1 data-mode="on">The lights come on for two things: <em>requirements</em> and <em>taste</em>.</h1>
+
+      <p class="lede" data-mode="off">Kogent builds solutions for knowledge work in the agentic engineering era. We supply the <em>context</em> a fleet of agents needs, so the line runs dark from intake to review without stopping to ask.</p>
+      <p class="lede" data-mode="on">Coding got fast. Deciding what to build, and knowing whether what came back is any <em>good</em>, did not. Kogent builds the instruments for that work, at the pace of an agent fleet.</p>
+
       <div class="cta-row">
         <a class="btn" href="mailto:pratul@kogent.ai">Talk to us</a>
-        <a class="quiet-link" href="#what-we-build">What we build</a>
+        <a class="quiet-link" href="#what-we-build"><span data-mode="off">What we build</span><span data-mode="on">Where you come in</span></a>
+        <button class="quiet-link" data-lights-toggle>
+          <span data-mode="off">Turn the lights on. See where you come in.</span>
+          <span data-mode="on">Turn the lights off. See what runs without you.</span>
+        </button>
       </div>
-      <p class="floor-status mono"><span class="pip" aria-hidden="true"></span><span id="floor-status">Lights off · the line is running</span></p>
+
+      <p class="floor-status mono"><span class="pip" aria-hidden="true"></span><span data-mode="off">Lights off · the line is running</span><span data-mode="on">Lights on · the line is waiting on you</span></p>
     </div>
   </section>
 
   <section class="shift">
     <div class="container split">
-      <p class="label mono">The shift</p>
+      <p class="label mono"><span data-mode="off">The shift</span><span data-mode="on">The bottleneck</span></p>
       <div>
-        <h2>Software production is going&nbsp;dark.</h2>
-        <p class="prose">Fleets of coding agents now write, test, review, and ship around the clock while people move from the line to the control room. That's the <strong>dark factory pattern</strong>, and it fails in a predictable way. Not on broken tooling. On missing <em>context</em> and unresolved <em>ambiguity</em>.</p>
-        <p class="prose">Intent lives in one engineer's head. Decisions sit in chat scrollback. Domain knowledge leaves the building at six. Every gap becomes a question, and <strong>every question turns the lights back on</strong>.</p>
+        <h2 data-mode="off">Software production is going&nbsp;dark.</h2>
+        <h2 data-mode="on">The bottleneck moved off the&nbsp;keyboard.</h2>
+
+        <div data-mode="off">
+          <p class="prose">Fleets of coding agents now write, test, review, and ship around the clock while people move from the line to the control room. That's the <strong>dark factory pattern</strong>, and it fails in a predictable way. Not on broken tooling. On missing <em>context</em> and unresolved <em>ambiguity</em>.</p>
+          <p class="prose">Intent lives in one engineer's head. Decisions sit in chat scrollback. Domain knowledge leaves the building at six. Every gap becomes a question, and <strong>every question turns the lights back on</strong>.</p>
+        </div>
+
+        <div data-mode="on">
+          <p class="prose">Agents now write, test, and review faster than any team can keep up with. Yet delivery has barely sped up, because the constraint was never typing. It sits on either side of the keyboard: deciding precisely what to build, and knowing what to make of what came back.</p>
+          <p class="prose">Gates can prove a change matches its specification. Nothing can prove the specification was worth writing, or that the result is any good. Lights that come on because a question went unanswered are a <strong>failure</strong>. Lights on because it is your turn are the <strong>design</strong>.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="build" id="what-we-build">
     <div class="container">
-      <p class="label mono">What we build</p>
-      <div class="cards">
+      <p class="label mono"><span data-mode="off">What we build</span><span data-mode="on">Where you come in</span></p>
+
+      <p class="bridge">
+        <span data-mode="off">This is the half that runs without you. </span>
+        <span data-mode="on">This is the half that needs you. </span>
+        <button class="link-btn" data-lights-toggle>
+          <span data-mode="off">Turn the lights on for the other half.</span>
+          <span data-mode="on">Turn the lights off for the other half.</span>
+        </button>
+      </p>
+
+      <div class="cards" data-mode="off">
         <div class="card">
           <p class="mono">Context supply</p>
           <h3>Everything the factory needs to know</h3>
           <p>We capture intent, decisions, constraints, and domain knowledge, then keep it current in a form agents consume without asking a human.</p>
         </div>
         <div class="card">
-          <p class="mono">Knowledge work</p>
-          <h3>Tools for the work that stays human</h3>
-          <p>Setting direction, weighing trade-offs, judging what shipped: instruments for doing the thinking work at the pace of an agent fleet.</p>
+          <p class="mono">Verification</p>
+          <h3>Proof the change matches the spec, before anyone looks</h3>
+          <p>Tests derived from the criteria, written before the change and hidden from the agent that writes it. One that games its tests gets routed to a person, not merged.</p>
         </div>
         <div class="card">
-          <p class="mono">Lights-out operations</p>
-          <h3>A factory that doesn't stop to ask</h3>
-          <p>Every contextual need of the solution handled end to end, so the pipeline keeps moving while you sleep.</p>
+          <p class="mono">Unattended operation</p>
+          <h3>It runs dark until it needs you</h3>
+          <p>Intake, generation, verification, and repair proceed with nobody in the loop. The line comes to you at the review gate, by design, and nowhere else.</p>
+        </div>
+      </div>
+
+      <div class="cards" data-mode="on">
+        <div class="card">
+          <p class="mono">Requirements</p>
+          <h3>Say what to build, precisely enough</h3>
+          <p>Ambiguity is cheap to resolve now and ruinous later. Intent becomes a specification with criteria a machine can hold you to, and a fuzzy spec gets refused before a run starts.</p>
+        </div>
+        <div class="card">
+          <p class="mono">Product direction</p>
+          <h3>Decide with evidence, not instinct</h3>
+          <p>A release brief built from research. Personas, trade-offs, and journey maps you can trace to their source. What separates a good release from a busy one gets decided before the first agent runs.</p>
+        </div>
+        <div class="card">
+          <p class="mono">Knowledge work</p>
+          <h3>The record the factory reads and writes</h3>
+          <p>Decisions, domain knowledge, and the documents that carry them, captured as durable artifacts traceable to their source. Ask why the agent did that and get an answer.</p>
         </div>
       </div>
     </div>
@@ -430,8 +603,10 @@
   <section class="contact">
     <div class="container">
       <p class="label mono">Get in touch</p>
-      <h2 style="margin-top: 1rem;">Where does your factory still&nbsp;stop?</h2>
-      <p class="prose">Tell us where agents wait on people, and we'll show you what context can close.</p>
+      <h2 style="margin-top: 1rem;" data-mode="off">Where does your factory still&nbsp;stop?</h2>
+      <h2 style="margin-top: 1rem;" data-mode="on">What is your factory waiting on you&nbsp;for?</h2>
+      <p class="prose" data-mode="off">Tell us where agents wait on people, and we'll show you what context can close.</p>
+      <p class="prose" data-mode="on">Tell us where the answer still has to come from a person, and we'll show you what to hand the line instead.</p>
       <a class="btn" href="mailto:pratul@kogent.ai">pratul@kogent.ai</a>
     </div>
   </section>
@@ -449,20 +624,59 @@
 
 <script>
   (function () {
-    var btn = document.getElementById("lights");
-    var status = document.getElementById("floor-status");
+    var root = document.documentElement;
+    var toggles = document.querySelectorAll("[data-lights-toggle]");
+    var announce = document.getElementById("lights-announce");
+
+    // Treat a storage throw as "key present" so the hint never shows and can
+    // never take down the toggle it advertises.
+    var seen = true;
+    try { seen = localStorage.getItem("kogent-lights") !== null; } catch (e) { seen = true; }
+
     function render() {
-      var on = document.documentElement.dataset.lights === "on";
-      btn.setAttribute("aria-pressed", String(on));
-      btn.setAttribute("aria-label", on ? "Turn the factory lights off" : "Turn the factory lights on");
-      status.textContent = on ? "Lights on · welcome to the floor" : "Lights off · the line is running";
+      var on = root.dataset.lights === "on";
+      for (var i = 0; i < toggles.length; i++) {
+        if (toggles[i].hasAttribute("aria-pressed")) {
+          toggles[i].setAttribute("aria-pressed", String(on));
+        }
+      }
     }
-    btn.addEventListener("click", function () {
-      var next = document.documentElement.dataset.lights === "on" ? "off" : "on";
-      document.documentElement.dataset.lights = next;
+
+    function apply(next) {
+      root.dataset.lights = next;
       try { localStorage.setItem("kogent-lights", next); } catch (e) {}
       render();
-    });
+    }
+
+    function toggle() {
+      var next = root.dataset.lights === "on" ? "off" : "on";
+      var reduce = window.matchMedia
+        && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (document.startViewTransition && !reduce) {
+        document.startViewTransition(function () { apply(next); });
+      } else {
+        apply(next);
+      }
+
+      if (announce) {
+        announce.textContent = next === "on"
+          ? "Lights on. Showing the half of the offering that needs you."
+          : "Lights off. Showing the half of the offering that runs without you.";
+      }
+
+      var hinted = document.querySelectorAll(".hint");
+      for (var i = 0; i < hinted.length; i++) hinted[i].classList.remove("hint");
+    }
+
+    if (!seen) {
+      var header = document.getElementById("lights");
+      if (header) header.classList.add("hint");
+    }
+
+    for (var i = 0; i < toggles.length; i++) {
+      toggles[i].addEventListener("click", toggle);
+    }
     render();
   })();
 </script>
