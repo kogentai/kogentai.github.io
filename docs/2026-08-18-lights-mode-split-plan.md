@@ -87,7 +87,7 @@ claim that citation.
 
 | Slot | Copy |
 |---|---|
-| Eyebrow | Knowledge work `·` agentic engineering era |
+| Eyebrow **[R5]** | The factory floor `·` agentic engineering era |
 | H1 | The dark factory stops for one thing: *context*. |
 | Lede **[R4]** | Kogent builds solutions for knowledge work in the agentic engineering era. We supply the *context* a fleet of agents needs, so the line runs dark from intake to review without stopping to ask. |
 | Quiet link | What we build |
