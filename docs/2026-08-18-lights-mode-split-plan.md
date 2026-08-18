@@ -326,10 +326,16 @@ about the event.
 - **Announce the swap.** A visually hidden `aria-live="polite"` region reports
   the new reading on toggle. Otherwise a screen reader hears "pressed" while
   the h1, lede, section, three cards, and contact copy all change silently.
-- **Stable accessible name.** Keep `aria-pressed` but stop swapping
-  `aria-label` (lines 456-457). Changing an accessible name on state change is
-  a known antipattern and double-encodes state against `aria-pressed`. The name
-  becomes a constant, "Factory lights."
+- **Accessible name comes from the visible label [R6].** The header pill's
+  label now carries state ("Lights off" / "Lights on"), so `aria-label` is
+  removed entirely and the name is derived from the button's own content. WCAG
+  2.5.3 Label in Name requires the accessible name to contain the visible text;
+  deriving it from that text satisfies the rule by construction rather than by
+  keeping two strings in sync. `aria-pressed` is kept, so state is conveyed
+  twice deliberately: once in the name a voice-control user speaks, once in the
+  toggle state a screen reader reports. Rev 4 used a constant "Factory lights"
+  instead, which was correct only while the visible label was the constant
+  word "Lights."
 - `role="switch"` is rejected: a switch implies a setting, and this plan's whole
   argument is that the toggle is not a preference.
 
