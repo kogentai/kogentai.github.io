@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" data-lights="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Trust Center · Kogent</title>
+<meta name="description" content="What Kogent's security posture actually is today: the tamper-evident audit trail, how AI-written changes are gated, where provider keys live, and what is not built yet.">
+<meta property="og:title" content="Trust Center · Kogent">
+<meta property="og:description" content="What is built today and what is not. The audit trail, the verification gates, where provider keys live, and the honest list of what is still on the roadmap.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://kogent.ai/trust/">
+<link rel="canonical" href="https://kogent.ai/trust/">
+<link rel="icon" href="/favicon.ico">
+<script>
+  try {
+    var pref = localStorage.getItem("kogent-lights");
+    if (pref === "on" || pref === "off") document.documentElement.dataset.lights = pref;
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Chrome (tokens, header, footer, lights toggle) is duplicated from
+     index.html rather than shared, because this site has no build step and
+     index.html is the live landing page — extracting a stylesheet would mean
+     a risky refactor of it for a second page's benefit. Keep the token block
+     below byte-identical to index.html's when either changes. */
+  :root {
+    --bg: #0B101B;
+    --bg-raised: #10192B;
+    --text: #E9EDF5;
+    --muted: #93A0B4;
+    --hairline: rgba(233, 237, 245, 0.13);
+    --accent: #2F66D3;
+    --accent-bright: #6E9BFF;
+    --tungsten: #F2A93B;
+    --button: #2F66D3;
+    --button-hover: #3B74E8;
+  }
+  html[data-lights="on"] {
+    --bg: #EEF1F5;
+    --bg-raised: #FFFFFF;
+    --text: #141D2C;
+    --muted: #5B6678;
+    --hairline: rgba(20, 29, 44, 0.15);
+    --accent-bright: #2F66D3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Poppins", system-ui, sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .mono {
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+    transition: background-color 0.5s ease;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .wordmark span {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .lights {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    cursor: pointer;
+    padding: 0.4rem 0.85rem;
+    color: var(--text);
+    transition: background-color 0.5s ease, border-color 0.3s ease;
+  }
+  .lights-word {
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .lights-track {
+    display: inline-block;
+    width: 2.4rem;
+    height: 1.3rem;
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    position: relative;
+    transition: border-color 0.3s ease;
+  }
+  .lights-dot {
+    position: absolute;
+    top: 50%;
+    left: 0.2rem;
+    transform: translateY(-50%);
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: #3A4353;
+    transition: left 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  /* Only one half of a lights-paired label is ever shown. Without this the
+     toggle reads "LIGHTS OFFLIGHTS ON". */
+  html[data-lights="off"] [data-mode="on"],
+  html[data-lights="on"] [data-mode="off"] { display: none; }
+
+  html[data-lights="on"] .lights-dot {
+    left: calc(100% - 1rem);
+    background: var(--tungsten);
+    box-shadow: 0 0 10px 2px rgba(242, 169, 59, 0.55);
+  }
+
+  /* ---------- page ---------- */
+  .doc { padding: clamp(3rem, 8vw, 5rem) 0 clamp(3rem, 8vw, 5rem); }
+
+  .doc-head { max-width: 46rem; }
+  .doc-head h1 {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 1.2rem 0 1.4rem;
+  }
+  .doc-head .lede {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .doc-head .lede + .lede { margin-top: 0.9rem; }
+  .doc-head em { font-style: italic; color: var(--accent-bright); }
+
+  .doc-body { max-width: 46rem; margin-top: clamp(2.5rem, 6vw, 4rem); }
+
+  .doc-body h2 {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 3vw, 1.9rem);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin: 3rem 0 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .doc-body h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+  /* The header is sticky at 4rem, so anything scrolled to by anchor or by
+     scrollIntoView would land underneath it without this. */
+  .doc-body h2 { scroll-margin-top: 5rem; }
+
+  .doc-body p { margin-bottom: 1.05rem; }
+  .doc-body p:last-child { margin-bottom: 0; }
+  .doc-body strong { font-weight: 600; }
+  .doc-body em { font-style: italic; color: var(--accent-bright); }
+
+  .doc-body ul {
+    list-style: none;
+    margin: 0 0 1.05rem;
+  }
+  .doc-body li {
+    position: relative;
+    padding-left: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+  .doc-body li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 0.45rem;
+    height: 1px;
+    background: var(--accent-bright);
+  }
+
+  .doc-body a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent-bright) 40%, transparent);
+  }
+  .doc-body a:hover { border-bottom-color: var(--accent-bright); }
+
+  .note {
+    background: var(--bg-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 0.6rem;
+    padding: 1.1rem 1.3rem;
+    margin: 1.5rem 0;
+    transition: background-color 0.5s ease;
+  }
+  .note p { margin-bottom: 0.6rem; }
+  .note p:last-child { margin-bottom: 0; }
+
+  .updated { color: var(--muted); }
+
+  .btn {
+    display: inline-block;
+    background: var(--button);
+    color: #fff;
+    text-decoration: none;
+    border: 0;
+    border-radius: 0.5rem;
+    padding: 0.7rem 1.3rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  .btn:hover { background: var(--button-hover); }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 1.6rem 0 2rem;
+  }
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<p class="sr-only" id="lights-announce" role="status" aria-live="polite"></p>
+
+<header>
+  <div class="container bar">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="24" height="27">
+      <span>Kogent</span>
+    </a>
+    <button class="lights" id="lights" data-lights-toggle aria-pressed="false">
+      <span class="lights-word"><span data-mode="off">Lights off</span><span data-mode="on">Lights on</span></span>
+      <span class="lights-track"><span class="lights-dot"></span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="doc">
+    <div class="container">
+      <div class="doc-head">
+        <p class="mono">Trust Center <span aria-hidden="true">·</span> updated August 2026</p>
+        <h1>Evidence as a property of the system</h1>
+        <p class="lede">Kogent treats evidence as a property of the system, not an afterthought. Specifying, building, verifying and shipping a change happens in one place — so the record of <em>why</em> something is in production is a byproduct of the workflow rather than something assembled afterwards.</p>
+        <p class="lede">This page states what is built today and what is not. Where a capability is on the roadmap, we say so plainly rather than implying it ships.</p>
+      </div>
+
+      <div class="doc-body">
+        <h2>The audit trail</h2>
+        <p>Changes are recorded as append-only, attributed history — who, what, and when. The server audit logs go further: entries are hash-chained, and the chain is checkpointed on a schedule with Ed25519-signed checkpoints plus an independent witness held outside the database, so a verifier can detect after-the-fact edits rather than asking you to trust that none happened.</p>
+        <p>A compliance-retention mode exempts audit-bearing records from routine retention pruning, so the trail cannot be quietly aged out. Records outside the server audit logs — the build and artifact stores — are append-only and attributed, but are not part of the hash chain.</p>
+
+        <h2>Evidence you can take with you</h2>
+        <ul>
+          <li><strong>Evidence binder.</strong> A one-click, hash-manifested export of a release's evidence — specifications, validation history, verification results and reviews — with a manifest over the exported files and the audit chain's current checkpoint and verifier verdict embedded. It is offline-navigable and yours to keep.</li>
+          <li><strong>Electronic signatures.</strong> A Part-11-shaped signing primitive is built: a review is signed with a freshly issued email challenge, producing a rendered manifest that records the signing identity. It requires a configured mail provider, and signature enforcement is off by default — a single-operator workspace cannot function with it on. We are aligned with 21 CFR Part 11; we are not a validated Part 11 package and hold no certification to it.</li>
+        </ul>
+
+        <h2>How AI-written changes are verified</h2>
+        <p>Autonomous builds are gated by deterministic checks rather than by a model's judgement of its own work:</p>
+        <ul>
+          <li><strong>The specification is admitted by code, not a model.</strong> A build cannot start from an empty spec, one below a completeness threshold, or one with no testable criteria.</li>
+          <li><strong>Tests are written first, and proven to fail first.</strong> An independent step authors an acceptance test per criterion and proves each one fails against the untouched repository.</li>
+          <li><strong>The generator never sees the gates.</strong> The model that writes the change is given the specification only — not the test suite, not the gate configuration.</li>
+          <li><strong>Verification runs on a pristine clone</strong> with only the candidate change applied, in a separate environment from the one that produced it.</li>
+          <li><strong>A reward-hacking guard</strong> routes changes that touch tests, CI configuration, the test runner or lockfiles to a human, and fails empty changes outright.</li>
+          <li><strong>A human approves before anything opens.</strong> A pull request opens only when the latest review is an approval and the run's own verdict is a pass — and it opens from the server's stored change, never a client-supplied one.</li>
+          <li><strong>Coverage reports honestly.</strong> A criterion that could not be verified is reported as unverified rather than as a pass.</li>
+        </ul>
+        <p>Every run is recorded as a replayable record, so &ldquo;why did the agent do that?&rdquo; is answerable after the fact.</p>
+
+        <h2>Keys and model providers</h2>
+        <p>Provider API keys are never embedded in the application and never read from its environment. They live in a server-side vault encrypted with AES-256-GCM, scoped per workspace, and are released only at the moment of use — to the model proxy for interactive calls, or into an isolated single-use sandbox for a build.</p>
+        <p>The desktop application holds no provider keys and talks to the proxy, never to model vendors directly. Inside a build sandbox the credential is not the key either: each run carries a short-lived token scoped to one workspace, one provider and one phase of the run, which the proxy exchanges for the real key on the way out and revokes when the run ends. Code running in a sandbox — including code the model just wrote — never has a credential worth stealing.</p>
+        <p>The proxy is model-neutral across Anthropic, OpenAI and Google. Every model call is metered into a usage ledger, and autonomous runs carry hard budgets on tokens, retries and wall-clock time — a run stops when it reaches its cap.</p>
+
+        <h2>Isolated execution</h2>
+        <p>Generated code is never run on your machine or in a shared environment. Each autonomous build gets a cold, single-use micro-VM sandbox with deny-by-default network egress enforced outside the virtual machine, so code running as root inside it cannot lift its own restrictions. Verification always happens on a fresh clone, so a run cannot quietly contaminate the environment that judges it.</p>
+
+        <h2>Application security</h2>
+        <ul>
+          <li><strong>A memory-safe core.</strong> Authority, inter-process validation, secret handling and system integration live in Rust. The interface layer is treated as an untrusted client of that core: every message crossing the boundary is validated, every path is canonicalised and confined to a known workspace root, and every database query uses bound parameters.</li>
+          <li><strong>Signed updates.</strong> Update manifests are cryptographically verified against an embedded public key, so only releases we signed can install.</li>
+          <li><strong>A hardened supply chain.</strong> Dependencies are pinned and locked; continuous integration runs secret scanning and dependency vulnerability audits across both the JavaScript and Rust trees on every push; and every release ships a software bill of materials alongside signed artifacts.</li>
+        </ul>
+
+        <h2>Access</h2>
+        <p>Access is scoped per workspace — only the people you invite can see a workspace's data — and every request is checked against that membership before it is forwarded. Workspace membership has two tiers, and the line between them is drawn at the one operation that hands back a secret: any member can add, replace or remove a provider key, but only an owner can read a stored key back in plaintext. Every such read is written to the audit trail.</p>
+        <p>The stronger protection is structural rather than permissional: no client ever receives a provider key at all. The desktop application can only write to the vault, and model calls are made by the proxy on your behalf, so a compromised account cannot extract a credential that never reaches it.</p>
+        <p>An independent-review gate can require that the reviewer of a run is not its author, the separation-of-duties control regulated environments expect; it is opt-in.</p>
+        <div class="note">
+          <p class="mono">Not yet built</p>
+          <p>Single sign-on (SAML/OIDC), SCIM provisioning and role-based access control are on the roadmap and are our current priority for enterprise deployments.</p>
+        </div>
+
+        <h2>Deployment</h2>
+        <p>Kogent runs single-tenant today, and can be self-hosted. A bring-your-own-cloud architecture — where the data plane runs inside your own cloud account under customer-managed encryption keys, with all connectivity initiated outbound from your environment — is the direction we are building toward; the envelope-encryption foundation is in place, the full data plane is not. We will not describe it as available until it is.</p>
+
+        <h2>Compliance</h2>
+        <p>Kogent is <strong>not</strong> currently certified to SOC 2, ISO 27001 or ISO/IEC 42001. Those certifications are on our roadmap, and we are glad to walk enterprise teams through our current posture, the evidence the product already produces, and our timeline during procurement.</p>
+
+        <h2>Data processing</h2>
+        <p>A Data Processing Agreement (DPA) is available on request for enterprise customers. Full security documentation, including our threat model and secret-rotation process, is shared under NDA during procurement.</p>
+
+        <h2>Reporting a vulnerability</h2>
+        <p>Report suspected vulnerabilities to <a href="mailto:security@kogentai.com">security@kogentai.com</a>. Please do not open public issues for security matters. We acknowledge within 72 hours.</p>
+
+        <p style="margin-top:2.5rem"><a class="btn" href="mailto:pratul@kogent.ai">Talk to us about your requirements</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="18" height="20">
+      <span>Kogent</span>
+    </a>
+    <p class="mono">© 2026 Kogent · now building for the agentic engineering era</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggles = document.querySelectorAll("[data-lights-toggle]");
+    var announce = document.getElementById("lights-announce");
+
+    function render() {
+      var on = root.dataset.lights === "on";
+      for (var i = 0; i < toggles.length; i++) {
+        if (toggles[i].hasAttribute("aria-pressed")) {
+          toggles[i].setAttribute("aria-pressed", String(on));
+        }
+      }
+    }
+
+    function apply(next) {
+      root.dataset.lights = next;
+      try { localStorage.setItem("kogent-lights", next); } catch (e) {}
+      render();
+    }
+
+    function toggle() {
+      var next = root.dataset.lights === "on" ? "off" : "on";
+      var reduce = window.matchMedia
+        && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (document.startViewTransition && !reduce) {
+        document.startViewTransition(function () { apply(next); });
+      } else {
+        apply(next);
+      }
+
+      if (announce) {
+        announce.textContent = next === "on" ? "Lights on." : "Lights off.";
+      }
+    }
+
+    for (var i = 0; i < toggles.length; i++) {
+      toggles[i].addEventListener("click", toggle);
+    }
+    render();
+  })();
+</script>
+
+</body>
+</html>
