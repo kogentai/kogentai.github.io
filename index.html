@@ -426,19 +426,6 @@
   }
   .foot .wordmark span { font-size: 0.92rem; }
 
-  /* The Trust Center link sits inside .foot's .mono paragraph, so it has to
-     inherit that treatment rather than pick up the UA's default blue. */
-  .foot a:not(.wordmark) {
-    color: var(--muted);
-    text-decoration: none;
-    border-bottom: 1px solid var(--hairline);
-    transition: color 0.2s ease, border-color 0.2s ease;
-  }
-  .foot a:not(.wordmark):hover {
-    color: var(--text);
-    border-bottom-color: var(--muted);
-  }
-
   /* ---------- load animation ---------- */
   @media (prefers-reduced-motion: no-preference) {
     .hero::before { animation: warmup 1.4s ease; }
@@ -631,7 +618,7 @@
       <img src="/logo.png" alt="" width="18" height="20">
       <span>Kogent</span>
     </a>
-    <p class="mono">© 2026 Kogent · now building for the agentic engineering era <span aria-hidden="true">·</span> <a href="/trust/">Trust Center</a></p>
+    <p class="mono">© 2026 Kogent · now building for the agentic engineering era</p>
   </div>
 </footer>
 

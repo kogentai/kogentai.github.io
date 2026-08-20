@@ -6,17 +6,23 @@ Hosted on GitHub Pages with the custom domain `kogent.ai` (see `CNAME`). Plain s
 
 ## Pages
 
-- `index.html` — the landing page.
-- `trust/index.html` — the Trust Center at `/trust/`, linked from the landing footer.
+- `index.html` — the landing page. The only page on this site.
 
-The two pages **duplicate** their chrome (design tokens, header, footer, lights
-toggle) rather than sharing a stylesheet, because there is no build step and
-`index.html` is the live landing page — factoring out a shared `site.css` would
-mean a risky refactor of it for a second page's benefit. If you change a design
-token in one, change it in the other; `trust/index.html` says so at the top of
-its `<style>` block.
+## The Trust Center is not here
 
-The Trust Center makes specific claims about the product's security posture.
-Those claims are mirrored in the Kogent monorepo at
-`apps/website/src/app/trust/page.jsx` — keep the two in step, and do not
-describe a capability as shipped before it is.
+The Trust Center used to live at `/trust/`, linked from the landing footer. It
+is now **product documentation**, not marketing: it ships inside the app's Doc
+Center, in the Kogent monorepo at
+`apps/kogent/docs/user/trust-center.md` (`user` persona).
+
+That move is deliberate, not a tidy-up. The Trust Center makes specific,
+falsifiable claims about the product's security posture, and in the monorepo
+each claim is pinned to the source files that back it — the
+`docs:check` gate fails when a pinned file changes and the prose has not been
+re-read. A hand-maintained copy on a build-less static site cannot be held to
+that, and a second copy would drift out of step with the first. So: **do not
+re-add a Trust Center page to this repo.** Send people to the app docs instead.
+
+A separate marketing-side statement of posture still exists in the monorepo at
+`apps/website/src/app/trust/page.jsx` (the majordomo.md site); it is unaffected
+by this and remains marketing copy.
