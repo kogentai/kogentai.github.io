@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-lights="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Support · Kogent</title>
+<meta name="description" content="Get help with the Kogent mobile app.">
+<meta property="og:title" content="Support · Kogent">
+<meta property="og:description" content="Get help with the Kogent mobile app.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kogent.ai/support/">
+<link rel="icon" href="/favicon.ico">
+<script>
+  try {
+    var pref = localStorage.getItem("kogent-lights");
+    if (pref === "on" || pref === "off") document.documentElement.dataset.lights = pref;
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/legal.css">
+</head>
+<body>
+
+<header>
+  <div class="container bar">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="24" height="27">
+      <span>Kogent</span>
+    </a>
+    <button class="lights" id="lights" data-lights-toggle aria-pressed="false">
+      <span class="lights-word"><span data-mode="off">Lights off</span><span data-mode="on">Lights on</span></span>
+      <span class="lights-track"><span class="lights-dot"></span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="container legal">
+    <p class="mono">Help</p>
+    <h1>Support</h1>
+
+    <p class="lede">
+      Something not working in the Kogent mobile app? Email
+      <a href="mailto:pratul@kogent.ai">pratul@kogent.ai</a> and describe what
+      happened. We read every message and reply directly.
+    </p>
+
+    <h2>Worth checking first</h2>
+    <p>These account for most of what people write in about.</p>
+    <ul>
+      <li>
+        <strong>The sign-in code never arrives.</strong> Check your spam folder — the
+        code is emailed and arrives within a minute or so. Codes are single-use and
+        expire, so if you request several, use the newest one. If you have pointed the
+        app at your own server rather than the default, confirm that server has email
+        delivery configured; without it, codes are never sent.
+      </li>
+      <li>
+        <strong>Sign-in fails against a custom server.</strong> Confirm the server
+        address on the sign-in screen is exactly right and reachable from your device.
+        Leaving it blank restores the default hosted server.
+      </li>
+      <li>
+        <strong>No notifications.</strong> They have to be enabled in two places:
+        for Kogent in your device Settings, and in the app under
+        <strong>Me &rarr; Notifications</strong>. Push is delivered to the device you
+        were most recently signed in on.
+      </li>
+      <li>
+        <strong>Content looks stale.</strong> Pull to refresh. If it persists, check
+        the connection indicator in the app header — the app keeps working offline and
+        syncs when it can reach the server again.
+      </li>
+    </ul>
+
+    <h2>Deleting your account</h2>
+    <p>
+      You can delete your account and personal data from inside the app, or by writing
+      to us. See <a href="/account-deletion/">account deletion</a> for what that erases.
+    </p>
+
+    <h2>Still stuck</h2>
+    <p>
+      Email us and include your platform (iOS or Android), the app version from
+      <strong>Me</strong>, and what you were doing when it went wrong. That is usually
+      enough to reproduce it without a back-and-forth.
+    </p>
+
+    <div class="contact">
+      <p class="mono">Support contact</p>
+      <p>Email <a href="mailto:pratul@kogent.ai">pratul@kogent.ai</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container foot">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="18" height="20">
+      <span>Kogent</span>
+    </a>
+    <nav class="foot-links mono" aria-label="Legal">
+      <a href="/privacy/">Privacy</a>
+      <a href="/support/">Support</a>
+      <a href="/account-deletion/">Delete account</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggles = document.querySelectorAll("[data-lights-toggle]");
+    function render() {
+      var on = root.dataset.lights === "on";
+      for (var i = 0; i < toggles.length; i++) {
+        if (toggles[i].hasAttribute("aria-pressed")) {
+          toggles[i].setAttribute("aria-pressed", String(on));
+        }
+      }
+    }
+    function apply(next) {
+      root.dataset.lights = next;
+      try { localStorage.setItem("kogent-lights", next); } catch (e) {}
+      render();
+    }
+    for (var i = 0; i < toggles.length; i++) {
+      toggles[i].addEventListener("click", function () {
+        apply(root.dataset.lights === "on" ? "off" : "on");
+      });
+    }
+    render();
+  })();
+</script>
+
+</body>
+</html>

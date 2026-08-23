@@ -1,0 +1,184 @@
+/* Shared styles for the legal / support pages. Tokens mirror index.html so a
+   page here reads as the same site, including the lights toggle. */
+:root {
+  --bg: #0B101B;
+  --bg-raised: #10192B;
+  --text: #E9EDF5;
+  --muted: #93A0B4;
+  --hairline: rgba(233, 237, 245, 0.13);
+  --accent: #2F66D3;
+  --accent-bright: #6E9BFF;
+  --tungsten: #F2A93B;
+  --button: #2F66D3;
+}
+html[data-lights="on"] {
+  --bg: #EEF1F5;
+  --bg-raised: #FFFFFF;
+  --text: #141D2C;
+  --muted: #5B6678;
+  --hairline: rgba(20, 29, 44, 0.15);
+  --accent-bright: #2F66D3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Poppins", system-ui, sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+html[data-lights="off"] [data-mode="on"],
+html[data-lights="on"] [data-mode="off"] { display: none; }
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+.mono {
+  font-family: "Spline Sans Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- header ---------- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--hairline);
+  transition: background-color 0.5s ease;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.wordmark img { display: block; }
+.wordmark span { font-weight: 600; font-size: 1.02rem; letter-spacing: 0.01em; }
+
+.lights {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 0.4rem 0.85rem;
+  color: var(--text);
+  transition: background-color 0.5s ease, border-color 0.3s ease;
+}
+.lights .lights-word {
+  font-family: "Spline Sans Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.lights-track {
+  display: inline-block;
+  width: 2.4rem;
+  height: 1.3rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+.lights-dot {
+  position: absolute;
+  top: 50%;
+  left: 0.2rem;
+  transform: translateY(-50%);
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: #3A4353;
+  transition: left 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+html[data-lights="on"] .lights-dot {
+  left: calc(100% - 1rem);
+  background: var(--tungsten);
+  box-shadow: 0 0 10px 2px rgba(242, 169, 59, 0.55);
+}
+.lights:hover { border-color: var(--muted); }
+.lights:hover .lights-track { border-color: var(--muted); }
+.lights:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; }
+
+/* ---------- prose ---------- */
+.legal {
+  padding: clamp(2.75rem, 7vw, 4.5rem) 0 clamp(3rem, 8vw, 5rem);
+  max-width: 46rem;
+}
+.legal h1 {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.1rem, 5.5vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.6rem;
+}
+.legal .updated { margin-bottom: 2.4rem; }
+.legal h2 {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.42rem;
+  line-height: 1.25;
+  margin: 2.6rem 0 0.75rem;
+}
+.legal h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.6rem 0 0.4rem;
+}
+.legal p { margin-bottom: 1rem; color: var(--text); }
+.legal p.lede { font-size: 1.08rem; color: var(--muted); }
+.legal ul { margin: 0 0 1rem 1.15rem; }
+.legal li { margin-bottom: 0.65rem; padding-left: 0.25rem; }
+.legal strong { font-weight: 600; }
+.legal a { color: var(--accent-bright); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.legal a:hover { text-decoration-thickness: 2px; }
+
+.legal .note {
+  border-left: 2px solid var(--hairline);
+  padding: 0.15rem 0 0.15rem 1.1rem;
+  margin: 1.4rem 0;
+  color: var(--muted);
+}
+.legal .contact {
+  margin-top: 3rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--hairline);
+}
+.legal .contact p { margin-bottom: 0.3rem; }
+
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--hairline); padding: 1.6rem 0 2rem; }
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.foot .wordmark span { font-size: 0.92rem; }
+.foot-links { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+.foot-links a { color: var(--muted); text-decoration: none; }
+.foot-links a:hover { color: var(--text); }
