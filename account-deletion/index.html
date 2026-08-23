@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-lights="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Delete Your Account · Kogent</title>
+<meta name="description" content="How to delete your Kogent account, and exactly what that erases.">
+<meta property="og:title" content="Delete Your Account · Kogent">
+<meta property="og:description" content="How to delete your Kogent account, and exactly what that erases.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kogent.ai/account-deletion/">
+<link rel="icon" href="/favicon.ico">
+<script>
+  try {
+    var pref = localStorage.getItem("kogent-lights");
+    if (pref === "on" || pref === "off") document.documentElement.dataset.lights = pref;
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/legal.css">
+</head>
+<body>
+
+<header>
+  <div class="container bar">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="24" height="27">
+      <span>Kogent</span>
+    </a>
+    <button class="lights" id="lights" data-lights-toggle aria-pressed="false">
+      <span class="lights-word"><span data-mode="off">Lights off</span><span data-mode="on">Lights on</span></span>
+      <span class="lights-track"><span class="lights-dot"></span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="container legal">
+    <p class="mono">Legal</p>
+    <h1>Delete Your Account</h1>
+    <p class="mono updated">Last updated: 22 August 2026</p>
+
+    <p class="lede">
+      You can permanently delete your Kogent account and personal data at any time.
+      Deletion is carried out by the Kogent server you signed in to, takes effect
+      immediately, and applies to every device you have used.
+    </p>
+
+    <h2>How to delete it</h2>
+    <ul>
+      <li>
+        <strong>In the app.</strong> Open <strong>Me</strong>, tap
+        <strong>Delete account</strong>, and confirm. This is the fastest route and
+        takes effect at once.
+      </li>
+      <li>
+        <strong>By email.</strong> If you cannot get into the app, email
+        <a href="mailto:pratul@kogent.ai">pratul@kogent.ai</a> from the address on the
+        account and ask us to delete it. Tell us which server you use Kogent with so
+        the request reaches the right place.
+      </li>
+    </ul>
+
+    <h2>What is erased</h2>
+    <ul>
+      <li>Your account identity — email address, display name and profile.</li>
+      <li>
+        Content that is private to you: your personally-owned records, and your
+        personal workspace along with everything scoped to it.
+      </li>
+      <li>
+        Every session, so no existing sign-in survives. The erased identity is
+        recorded so that a token issued before the deletion cannot quietly recreate
+        the account.
+      </li>
+      <li>
+        Every registered push token, so no device can receive notifications for the
+        account.
+      </li>
+    </ul>
+
+    <h2>What is anonymised instead</h2>
+    <p>
+      Content you authored in shared team spaces — records, comments and change
+      history — is not deleted, because deleting it would remove other people's work
+      and the history their work depends on. It is reassigned to a system placeholder
+      author, so it survives without being attributed to you.
+    </p>
+
+    <h2>The one exception: records under a legal hold</h2>
+    <p class="note">
+      Teams on a regulated plan can turn on compliance mode, which places their audit
+      history under a retention obligation we are not free to break. If you have acted
+      in such a workspace, the audit entries naming you are retained, and your identity
+      is <strong>pseudonymised</strong> rather than erased: personally identifying
+      fields are scrubbed, all access and membership is revoked, and what remains is a
+      reference with no personal data in it. Accounts with no compliance-mode history
+      are erased outright.
+    </p>
+
+    <h2>Timing</h2>
+    <p>
+      The deletion itself is immediate. Copies of audit data held by our internal
+      services are queued for erasure in the same transaction and retried until they
+      succeed, so an outage can delay that step but cannot skip it.
+    </p>
+
+    <div class="contact">
+      <p class="mono">Questions about account deletion</p>
+      <p>Email <a href="mailto:pratul@kogent.ai">pratul@kogent.ai</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container foot">
+    <a class="wordmark" href="/" aria-label="Kogent home">
+      <img src="/logo.png" alt="" width="18" height="20">
+      <span>Kogent</span>
+    </a>
+    <nav class="foot-links mono" aria-label="Legal">
+      <a href="/privacy/">Privacy</a>
+      <a href="/support/">Support</a>
+      <a href="/account-deletion/">Delete account</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggles = document.querySelectorAll("[data-lights-toggle]");
+    function render() {
+      var on = root.dataset.lights === "on";
+      for (var i = 0; i < toggles.length; i++) {
+        if (toggles[i].hasAttribute("aria-pressed")) {
+          toggles[i].setAttribute("aria-pressed", String(on));
+        }
+      }
+    }
+    function apply(next) {
+      root.dataset.lights = next;
+      try { localStorage.setItem("kogent-lights", next); } catch (e) {}
+      render();
+    }
+    for (var i = 0; i < toggles.length; i++) {
+      toggles[i].addEventListener("click", function () {
+        apply(root.dataset.lights === "on" ? "off" : "on");
+      });
+    }
+    render();
+  })();
+</script>
+
+</body>
+</html>

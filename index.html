@@ -425,6 +425,9 @@
     flex-wrap: wrap;
   }
   .foot .wordmark span { font-size: 0.92rem; }
+  .foot-links { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+  .foot-links a { color: var(--muted); text-decoration: none; }
+  .foot-links a:hover { color: var(--text); }
 
   /* ---------- load animation ---------- */
   @media (prefers-reduced-motion: no-preference) {
@@ -619,6 +622,11 @@
       <span>Kogent</span>
     </a>
     <p class="mono">© 2026 Kogent · now building for the agentic engineering era</p>
+    <nav class="foot-links mono" aria-label="Legal">
+      <a href="/privacy/">Privacy</a>
+      <a href="/support/">Support</a>
+      <a href="/account-deletion/">Delete account</a>
+    </nav>
   </div>
 </footer>
 
