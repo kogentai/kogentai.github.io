@@ -579,7 +579,7 @@
         <div class="card">
           <p class="mono">Verification</p>
           <h3>Proof the change matches the spec, before anyone looks</h3>
-          <p>An acceptance test per criterion, authored before the change and proven to fail against the untouched repository. The model that writes the change gets the specification and nothing else: not the test suite, not the gate configuration. Verification runs on a pristine clone, in a separate environment from the one that produced the change. Anything touching tests, CI configuration, the test runner or a lockfile goes to a human.</p>
+          <p>An acceptance test per criterion, authored before the change and proven to fail against the untouched repository. The model that writes the change never sees them. Anything touching tests, CI configuration or a lockfile is routed to a person.</p>
         </div>
         <div class="card">
           <p class="mono">Unattended operation</p>
