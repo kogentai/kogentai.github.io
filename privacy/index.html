@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark light">
 <title>Privacy Policy · Kogent</title>
-<meta name="description" content="How the Kogent mobile app and the hosted Kogent service handle your data.">
+<meta name="description" content="How the Kogent desktop and mobile apps, the hosted Kogent service and this website handle your data, and which providers process it.">
 <meta property="og:title" content="Privacy Policy · Kogent">
-<meta property="og:description" content="How the Kogent mobile app and the hosted Kogent service handle your data.">
+<meta property="og:description" content="How the Kogent desktop and mobile apps, the hosted Kogent service and this website handle your data, and which providers process it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kogent.ai/privacy/">
 <link rel="icon" href="/favicon.ico">
@@ -41,31 +41,33 @@
   <div class="container legal">
     <p class="mono">Legal</p>
     <h1>Privacy Policy</h1>
-    <p class="mono updated">Last updated: 22 August 2026</p>
+    <p class="mono updated">Last updated: 12 October 2026</p>
 
     <p class="lede">
-      This policy covers the Kogent mobile app for iOS and Android, and the hosted
-      Kogent service the app connects to by default.
+      This policy covers the Kogent desktop app, the Kogent mobile app for iOS and
+      Android, the hosted Kogent service both apps connect to by default, and this
+      website.
     </p>
 
     <h2>Two ways to run Kogent</h2>
     <p>
-      Which parts of this policy apply to you depends on which server the app is
+      Which parts of this policy apply to you depends on which server the apps are
       pointed at.
     </p>
     <ul>
       <li>
-        <strong>The hosted service (the default).</strong> Out of the box the app
-        connects to <code>app.kogent.ai</code>, which Kogent, Inc. ("we", "us")
+        <strong>The hosted service (the default).</strong> Out of the box the apps
+        connect to <code>app.kogent.ai</code>, which Kogent, Inc. ("we", "us")
         operates on rented infrastructure located in the United States. Everything
         described below applies.
       </li>
       <li>
-        <strong>A server you run.</strong> You can point the app at your own Kogent
+        <strong>A server you run.</strong> You can point either app at your own Kogent
         server from the sign-in screen. In that configuration your data goes to that
-        server and never reaches us — we operate nothing in that path, and the
+        server and never reaches us. We operate nothing in that path, and the
         collection and sharing sections below do not apply. The operator of that
-        server is the party responsible for your data.
+        server is the party responsible for your data, including which of the
+        providers below it uses.
       </li>
     </ul>
 
@@ -77,25 +79,114 @@
         and single-use.
       </li>
       <li>
-        <strong>Content you create.</strong> Notes, records, comments, tasks and other
-        content you create in the app are stored on the hosted service so they can sync
-        between your devices and, where you have shared them, with your team.
+        <strong>Content you create.</strong> Specifications, tasks, records, comments,
+        chat messages and other content you create in Kogent are stored on the hosted
+        service so they can sync between your devices and, where you have shared them,
+        with your team.
       </li>
       <li>
-        <strong>A device push token.</strong> If you turn notifications on, the app
-        registers a push token so the service can notify you about activity — a signal
-        arriving, a task assigned to you, a run finishing. The token is used only to
-        deliver notifications, and is removed when you sign out or delete your account.
+        <strong>Documents you bring in.</strong> When you capture a knowledge bundle,
+        the service keeps its own copy of the text of the sources you selected so the
+        pages it writes can cite them. That copy is encrypted at rest with a key
+        scoped to your workspace.
+      </li>
+      <li>
+        <strong>Code from your repositories.</strong> When a workspace runs a build,
+        the service clones the repository it was given access to, and stores the
+        resulting change, its test results and the run's record.
+      </li>
+      <li>
+        <strong>Keys and credentials your workspace adds.</strong> Model provider API
+        keys, repository tokens and connection credentials are stored encrypted
+        (AES-256-GCM) and scoped to the workspace. The desktop and mobile apps can
+        write a key but never receive one back.
+      </li>
+      <li>
+        <strong>Usage records.</strong> Each model call is metered by workspace, model
+        and token count, so budgets and spend can be enforced and shown to you.
+      </li>
+      <li>
+        <strong>A device push token.</strong> If you turn notifications on in the
+        mobile app, it registers a push token so the service can notify you about
+        activity: a signal arriving, a task assigned to you, a run finishing. The
+        token is used only to deliver notifications, and is removed when you sign
+        out or delete your account.
       </li>
       <li>
         <strong>Security and audit records.</strong> The service keeps an access log of
         significant actions, which includes the acting account's email address and IP
-        address. This exists to detect abuse, to investigate incidents, and — for
-        customers who enable compliance mode — to provide a tamper-evident record of
+        address. This exists to detect abuse, to investigate incidents, and, for
+        workspaces that turn on compliance mode, to provide a tamper-evident record of
         who changed what. See <a href="/account-deletion/">account deletion</a> for how
         this interacts with erasing your account.
       </li>
     </ul>
+
+    <h2>The desktop app</h2>
+    <p>
+      The desktop app is a client of the server you sign in to. Your workspace lives
+      on that server, not on your computer, and the app does not fall back to a local
+      copy of it when the server is unreachable.
+    </p>
+    <h3>What it keeps on your computer</h3>
+    <ul>
+      <li>
+        Your sign-in session and the organization and workspace you last had open, in
+        a settings file in the app's data folder.
+      </li>
+      <li>
+        Your Ask Kogent conversations, kept per person and per workspace, so two people
+        who share a computer do not see each other's threads.
+      </li>
+      <li>
+        A local copy of the chat channels, messages and member names you can see, so
+        the inbox opens quickly and can be searched.
+      </li>
+      <li>
+        A working folder for each workspace that holds the files of any Studio
+        project you preview locally.
+      </li>
+      <li>
+        Interface preferences such as layout, recent searches and window size.
+      </li>
+    </ul>
+    <h3>What it sends, and where</h3>
+    <ul>
+      <li>
+        <strong>To the Kogent server you signed in to.</strong> Everything you do in
+        the app. This includes every AI feature: the app holds no model provider keys
+        and never calls a model provider directly. Model calls go through the
+        server's model proxy, described below.
+      </li>
+      <li>
+        <strong>To E2B,</strong> when you open a live preview of a Studio project that
+        runs in a remote sandbox (see below).
+      </li>
+      <li>
+        <strong>To GitHub,</strong> when the app checks for updates. The update check
+        fetches a release manifest from <code>majordomobuild.github.io</code>, which
+        sees your IP address and nothing about your workspace.
+      </li>
+      <li>
+        <strong>To the public npm registry,</strong> when you preview a Studio project
+        on your own machine and its packages need installing.
+      </li>
+    </ul>
+    <p>
+      The desktop app contains no analytics, advertising or crash-reporting SDKs.
+      When something goes wrong, the error stays on your computer.
+    </p>
+
+    <h2>The mobile app</h2>
+    <p>
+      The mobile app stores your sign-in in the device's secure storage (the iOS
+      Keychain, or storage encrypted with the Android Keystore) and keeps a cache of the records and messages
+      it has synced, so screens open quickly and changes you make offline can be sent
+      when the connection returns. It sends your activity to the server you signed in
+      to, and your push token to that server if you turn notifications on. Like the
+      desktop app, it never calls a model provider directly. It contains no
+      analytics, advertising or crash-reporting SDKs.
+    </p>
 
     <h2>Who else sees it</h2>
     <p>
@@ -103,28 +194,117 @@
       process data on our instructions and for no other purpose:
     </p>
     <ul>
-      <li><strong>Resend</strong> — delivers sign-in code emails. Receives your email address.</li>
+      <li>
+        <strong>Hostinger</strong> hosts the servers and databases, in the United
+        States. The chat service and the search index (including the embeddings used
+        for search) run on those servers; we do not send your content to a third
+        party to embed or index it.
+      </li>
+      <li>
+        <strong>E2B</strong> supplies the isolated, single-use sandboxes that builds
+        and live previews run in, on E2B's infrastructure. A build sandbox receives a
+        clone of the repository, the specification and the change being made, and
+        is used for that one run. Without E2B, builds are switched off rather than run anywhere less
+        isolated.
+      </li>
+      <li>
+        <strong>Resend</strong> delivers the email the service sends, such as
+        sign-in codes and signature challenges. It receives your email address and
+        the message.
+      </li>
       <li>
         <strong>Expo, and Apple Push Notification service or Firebase Cloud Messaging</strong>
-        — deliver push notifications. Receive your push token and the notification text.
+        deliver mobile push notifications. They receive your push token and the
+        notification text.
       </li>
-      <li><strong>Hostinger</strong> — hosts the servers and database, in the United States.</li>
+      <li>
+        <strong>GitHub</strong> hosts this website and the desktop app's update
+        manifest.
+      </li>
+    </ul>
+
+    <h3>AI model providers</h3>
+    <p>
+      Kogent's AI features send text to a model provider: Ask Kogent, the agents in
+      your channels, drafting and checking specifications, capturing knowledge
+      bundles, and the coding agents inside a build. Every call goes through the
+      model proxy on the Kogent server. The proxy can reach three providers, and
+      which one handles a call depends on the models your workspace chooses. Claude
+      is the default.
+    </p>
+    <ul>
+      <li>
+        <strong>Anthropic</strong>: Claude models, including Claude Code, one of the
+        two coding agents a build can run.
+      </li>
+      <li>
+        <strong>OpenAI</strong>: GPT models, including Codex, the other coding agent.
+      </li>
+      <li><strong>Google</strong>: Gemini models, through the Gemini API.</li>
+    </ul>
+    <p>
+      A provider receives what the request contains: your messages, the
+      specification, the documents or pages an answer draws on, and during a build
+      the repository code the agent reads and writes. Calls are made with the API key
+      your workspace stores in Kogent (or, for Claude, the subscription your
+      workspace connects), so they run under your workspace's own account with that
+      provider, and that provider's terms for API data apply to them. A workspace
+      that has not added a key for a provider sends nothing to it.
+    </p>
+
+    <h3>Services your workspace connects</h3>
+    <p>
+      Some features work by connecting a service your team already uses. Nothing is
+      sent to these until someone in your workspace connects them, and what is sent
+      is what the feature needs:
+    </p>
+    <ul>
+      <li>
+        <strong>GitHub</strong>: builds clone your repository and open pull requests
+        with the token your workspace provides.
+      </li>
+      <li>
+        <strong>Slack</strong>: each workspace connects its own Slack app. Kogent reads
+        the messages addressed to it and the threads it is asked to act on, replies
+        in Slack, and keeps the messages it handles for up to seven days.
+      </li>
+      <li>
+        <strong>Google Drive</strong>: read-only access, used to bring in the files
+        you choose as sources.
+      </li>
+      <li>
+        <strong>Google BigQuery</strong>: read access to the test datasets you pick,
+        used only from the sandbox that checks a build.
+      </li>
     </ul>
 
     <h2>What we do not do</h2>
     <p>
-      We do not sell your data or share it with advertisers. The app contains no
+      We do not sell your data or share it with advertisers. The apps contain no
       third-party advertising or analytics SDKs, and we do not use your content to
-      train machine-learning models.
+      train machine-learning models. Whether a model provider may use API data is
+      governed by that provider's terms for the account your workspace's key belongs
+      to.
+    </p>
+
+    <h2>This website</h2>
+    <p>
+      kogent.ai is a static site hosted on GitHub Pages. It sets no cookies and runs
+      no analytics. Its fonts load from Google Fonts, so Google receives your IP
+      address when a page loads. The lights switch remembers your choice in your
+      browser's local storage, and that value never leaves your browser.
     </p>
 
     <h2>Retention and deletion</h2>
     <p>
       Your data is kept for as long as your account exists. You can delete your account
-      from inside the app at any time, and doing so erases your identity and personal
-      data. The
+      from inside the mobile app at any time, or by writing to us, and doing so erases
+      your identity and personal data. The
       <a href="/account-deletion/">account deletion page</a> sets out exactly what is
       erased, what is anonymised, and the one case in which a record is retained.
+      Deleting a workspace deletes its bundle archive along with everything else in
+      it. What the desktop app keeps on your computer stays there until you remove
+      it or uninstall the app.
     </p>
 
     <h2>Children</h2>
