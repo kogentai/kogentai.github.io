@@ -1,5 +1,5 @@
 /* Shared styles for the legal / support pages. Tokens mirror index.html so a
-   page here reads as the same site, including the lights toggle. */
+   page here reads as the same site. */
 :root {
   --bg: #0B101B;
   --bg-raised: #10192B;
@@ -11,14 +11,6 @@
   --tungsten: #F2A93B;
   --button: #2F66D3;
 }
-html[data-lights="on"] {
-  --bg: #EEF1F5;
-  --bg-raised: #FFFFFF;
-  --text: #141D2C;
-  --muted: #5B6678;
-  --hairline: rgba(20, 29, 44, 0.15);
-  --accent-bright: #2F66D3;
-}
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -27,12 +19,8 @@ body {
   color: var(--text);
   font-family: "Poppins", system-ui, sans-serif;
   line-height: 1.6;
-  transition: background-color 0.5s ease, color 0.5s ease;
   -webkit-font-smoothing: antialiased;
 }
-
-html[data-lights="off"] [data-mode="on"],
-html[data-lights="on"] [data-mode="off"] { display: none; }
 
 .container {
   max-width: 1080px;
@@ -56,7 +44,6 @@ header {
   background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--hairline);
-  transition: background-color 0.5s ease;
 }
 .bar {
   display: flex;
@@ -74,53 +61,17 @@ header {
 .wordmark img { display: block; }
 .wordmark span { font-weight: 600; font-size: 1.02rem; letter-spacing: 0.01em; }
 
-.lights {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: var(--bg-raised);
-  border: 1px solid var(--hairline);
-  border-radius: 999px;
-  cursor: pointer;
-  padding: 0.4rem 0.85rem;
-  color: var(--text);
-  transition: background-color 0.5s ease, border-color 0.3s ease;
-}
-.lights .lights-word {
-  font-family: "Spline Sans Mono", ui-monospace, monospace;
-  font-size: 0.72rem;
+.demo-link {
+  background: var(--button);
+  color: #fff;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.lights-track {
-  display: inline-block;
-  width: 2.4rem;
-  height: 1.3rem;
-  border: 1px solid var(--hairline);
+  text-decoration: none;
+  padding: 0.5rem 1.15rem;
   border-radius: 999px;
-  position: relative;
-  transition: border-color 0.3s ease;
 }
-.lights-dot {
-  position: absolute;
-  top: 50%;
-  left: 0.2rem;
-  transform: translateY(-50%);
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-  background: #3A4353;
-  transition: left 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
-}
-html[data-lights="on"] .lights-dot {
-  left: calc(100% - 1rem);
-  background: var(--tungsten);
-  box-shadow: 0 0 10px 2px rgba(242, 169, 59, 0.55);
-}
-.lights:hover { border-color: var(--muted); }
-.lights:hover .lights-track { border-color: var(--muted); }
-.lights:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; }
+.demo-link:hover { background: #2757B8; }
+.demo-link:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
 
 /* ---------- prose ---------- */
 .legal {

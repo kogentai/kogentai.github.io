@@ -1,12 +1,26 @@
 # kogent.ai
 
-Landing page for Kogent: solutions for knowledge work in the agentic engineering era, enabling the dark factory pattern by supplying the context agents need to run lights-out.
+The public site for Kogent: your domain experts deliver enterprise software, and your engineers set the rules. One landing page that makes the case and asks for a demo, plus the legal and support pages the apps link to.
 
 Hosted on GitHub Pages with the custom domain `kogent.ai` (see `CNAME`). Plain static HTML with no build step. Edit the page and push to `main` to deploy.
 
 ## Pages
 
-- `index.html` — the landing page. The only page on this site.
+- `index.html` — the landing page: headline, the 30-second film, what waiting costs, one example change, what changes, the alternatives, and "Book a demo". All its styles are inline. It works with JavaScript off.
+- `privacy/`, `support/`, `account-deletion/` — legal and support pages, styled by `legal.css`. Their text is legal text; change it only with the owner.
+- `media/kogent-overview.mp4` and `media/poster.jpg` — the overview film (1920×1080, 29 s, H.264, about 4.6 MB) and its poster, which is also the link-preview picture (`og:image`).
+
+## The booking link
+
+"Book a demo" has one home: the `href` of `<a id="booking-link">` in the demo section of `index.html`. Today it is a `mailto:` to pratul@kogent.ai with a prefilled subject and body, and the address is shown beside it as text a visitor can copy.
+
+To move to a scheduling page, replace that one `href` with the Cal.com or Calendly URL. The header and hero buttons point at the demo section; a small script at the end of the page sends them straight to the booking URL once it is a web address. Do not add a third-party form or a tracking script.
+
+## Copy rules
+
+Keep the home page short (about 450 to 650 words) and written for a non-technical reader. Every product claim must hold against the shipped user documentation in the Kogent monorepo (`apps/kogent/docs/user/`). No customer names and no speed, savings or customer-count numbers.
+
+The film uses drawings from Storyset, whose licence needs the credit "Illustrations by Storyset" in the footer. Do not use Storyset art, stock photos or other pictures as page decoration.
 
 ## The Trust Center is not here
 

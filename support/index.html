@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-lights="off">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark light">
+<meta name="color-scheme" content="dark">
 <title>Support · Kogent</title>
 <meta name="description" content="Get help with the Kogent mobile app.">
 <meta property="og:title" content="Support · Kogent">
@@ -11,12 +11,6 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kogent.ai/support/">
 <link rel="icon" href="/favicon.ico">
-<script>
-  try {
-    var pref = localStorage.getItem("kogent-lights");
-    if (pref === "on" || pref === "off") document.documentElement.dataset.lights = pref;
-  } catch (e) {}
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -30,10 +24,7 @@
       <img src="/logo.png" alt="" width="24" height="27">
       <span>Kogent</span>
     </a>
-    <button class="lights" id="lights" data-lights-toggle aria-pressed="false">
-      <span class="lights-word"><span data-mode="off">Lights off</span><span data-mode="on">Lights on</span></span>
-      <span class="lights-track"><span class="lights-dot"></span></span>
-    </button>
+    <a class="demo-link" href="/#demo">Book a demo</a>
   </div>
 </header>
 
@@ -110,31 +101,6 @@
   </div>
 </footer>
 
-<script>
-  (function () {
-    var root = document.documentElement;
-    var toggles = document.querySelectorAll("[data-lights-toggle]");
-    function render() {
-      var on = root.dataset.lights === "on";
-      for (var i = 0; i < toggles.length; i++) {
-        if (toggles[i].hasAttribute("aria-pressed")) {
-          toggles[i].setAttribute("aria-pressed", String(on));
-        }
-      }
-    }
-    function apply(next) {
-      root.dataset.lights = next;
-      try { localStorage.setItem("kogent-lights", next); } catch (e) {}
-      render();
-    }
-    for (var i = 0; i < toggles.length; i++) {
-      toggles[i].addEventListener("click", function () {
-        apply(root.dataset.lights === "on" ? "off" : "on");
-      });
-    }
-    render();
-  })();
-</script>
 
 </body>
 </html>
