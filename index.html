@@ -1,711 +1,535 @@
 <!DOCTYPE html>
-<html lang="en" data-lights="off">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark light">
-<title>Kogent · Context for the agentic engineering era</title>
-<meta name="description" content="Kogent builds solutions for the agentic engineering era. We supply the context that keeps a software factory running dark, and the instruments for the half that needs you: requirements, product direction, and the record.">
-<meta property="og:title" content="Kogent · Context for the agentic engineering era">
-<meta property="og:description" content="The factory runs dark from intake to review. Kogent supplies the context that keeps it running, and the instruments for the half that needs you.">
+<meta name="theme-color" content="#0B101B">
+<title>Kogent: your domain experts deliver enterprise software</title>
+<meta name="description" content="Kogent lets the people who know your business take a software change from idea to release themselves, under the standards and approvals your engineers set.">
+<link rel="canonical" href="https://kogent.ai/">
+<meta property="og:site_name" content="Kogent">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kogent.ai/">
+<meta property="og:title" content="Your domain experts deliver enterprise software. Your engineers set the rules.">
+<meta property="og:description" content="Kogent lets the people who know your business take a software change from idea to release themselves, under the standards and approvals your engineers set.">
+<meta property="og:image" content="https://kogent.ai/media/poster.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="A Kogent review that reads: 4 of 5 checks proven; 1 was never checked.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico">
-<script>
-  try {
-    var pref = localStorage.getItem("kogent-lights");
-    if (pref === "on" || pref === "off") document.documentElement.dataset.lights = pref;
-  } catch (e) {}
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..600&family=Poppins:wght@500;600&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+  /* Kogent identity: navy, cool grey paper, one blue, tungsten used once.
+     Newsreader carries the argument; Poppins is for the wordmark, navigation and buttons. */
   :root {
-    --bg: #0B101B;
-    --bg-raised: #10192B;
-    --text: #E9EDF5;
-    --muted: #93A0B4;
-    --hairline: rgba(233, 237, 245, 0.13);
-    --accent: #2F66D3;
-    --accent-bright: #6E9BFF;
+    --navy: #0B101B;
+    --navy-raised: #10192B;
+    --paper: #EEF1F5;
+    --ink: #111A29;
+    --text: #333E51;
+    --blue: #2F66D3;
+    --blue-hover: #2757B8;
+    --blue-lt: #6E9BFF;
     --tungsten: #F2A93B;
-    --cone-opacity: 1;
-    --wash-opacity: 0;
-    --button: #2F66D3;
-    --button-hover: #3B74E8;
-  }
-  html[data-lights="on"] {
-    --bg: #EEF1F5;
-    --bg-raised: #FFFFFF;
-    --text: #141D2C;
-    --muted: #5B6678;
-    --hairline: rgba(20, 29, 44, 0.15);
-    --accent-bright: #2F66D3;
-    --cone-opacity: 0;
-    --wash-opacity: 1;
+    --amber-ink: #8A5510;
+    --on-navy: #EEF1F7;
+    --on-navy-soft: #B4BFD2;
+    --rule: rgba(17, 26, 41, 0.16);
+    --rule-navy: rgba(233, 237, 245, 0.14);
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --gutter: clamp(1.25rem, 5vw, 2.5rem);
+    --measure: 70rem;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
+  h1, h2, h3, p, ol, dl, dd, figure { margin: 0; }
+  ol { padding: 0; list-style: none; }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
 
   body {
-    background: var(--bg);
+    margin: 0;
+    background: var(--navy); /* behind the sticky header; the page itself is paper */
     color: var(--text);
-    font-family: "Poppins", system-ui, sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    font-family: var(--serif);
+    font-optical-sizing: auto;
+    font-size: 1.1875rem;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
+  p { text-wrap: pretty; }
+  main { background: var(--paper); }
 
-  /* ---------- mode swap ---------- */
-  html[data-lights="off"] [data-mode="on"],
-  html[data-lights="on"] [data-mode="off"] { display: none; }
-
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: 0.45s; }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
+  .wrap {
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
   }
 
-  .container {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
-  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 3px; }
+  .on-navy :focus-visible { outline-color: var(--blue-lt); }
 
-  .mono {
-    font-family: "Spline Sans Mono", ui-monospace, monospace;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
+  .skip {
+    position: absolute; left: var(--gutter); top: -4rem; z-index: 30;
+    background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 500;
+    padding: 0.6rem 1rem; border-radius: 999px;
   }
+  .skip:focus { top: 0.75rem; }
 
   /* ---------- header ---------- */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--hairline);
-    transition: background-color 0.5s ease;
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(11, 16, 27, 0.86);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule-navy);
+    color: var(--on-navy);
+    font-family: var(--sans);
   }
-  .bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 4rem;
+  .bar { display: flex; align-items: center; gap: 2rem; height: 4rem; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    text-decoration: none; margin-right: auto;
+    font-weight: 600; font-size: 1.08rem; letter-spacing: -0.01em;
   }
-  .wordmark {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    text-decoration: none;
-    color: var(--text);
+  .brand svg { width: 1.5rem; height: 1.5rem; flex: none; }
+  .nav { display: flex; gap: 1.75rem; }
+  .nav a {
+    font-size: 0.9rem; font-weight: 500; text-decoration: none;
+    color: var(--on-navy-soft);
   }
-  .wordmark img { display: block; }
-  .wordmark span {
-    font-weight: 600;
-    font-size: 1.02rem;
-    letter-spacing: 0.01em;
-  }
+  .nav a:hover { color: var(--on-navy); }
 
-  .lights {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--bg-raised);
-    border: 1px solid var(--hairline);
-    border-radius: 999px;
-    cursor: pointer;
-    padding: 0.4rem 0.85rem;
-    color: var(--text);
-    transition: background-color 0.5s ease, border-color 0.3s ease;
-  }
-  .lights .lights-word {
-    font-family: "Spline Sans Mono", ui-monospace, monospace;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-  .lights-track {
+  .btn {
     display: inline-block;
-    width: 2.4rem;
-    height: 1.3rem;
-    border: 1px solid var(--hairline);
-    border-radius: 999px;
-    position: relative;
-    transition: border-color 0.3s ease;
+    font-family: var(--sans); font-weight: 500; font-size: 1rem; line-height: 1.2;
+    text-decoration: none; white-space: nowrap;
+    color: #fff; background: var(--blue);
+    padding: 0.9rem 1.7rem; border-radius: 999px;
+    transition: background-color 0.15s ease;
   }
-  .lights-dot {
-    position: absolute;
-    top: 50%;
-    left: 0.2rem;
-    transform: translateY(-50%);
-    width: 0.8rem;
-    height: 0.8rem;
-    border-radius: 50%;
-    background: #3A4353;
-    transition: left 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
-  }
-  html[data-lights="on"] .lights-dot {
-    left: calc(100% - 1rem);
-    background: var(--tungsten);
-    box-shadow: 0 0 10px 2px rgba(242, 169, 59, 0.55);
-  }
-  .lights:hover { border-color: var(--muted); }
-  .lights:hover .lights-track { border-color: var(--muted); }
-  .lights:focus-visible {
-    outline: 2px solid var(--accent-bright);
-    outline-offset: 4px;
-    border-radius: 999px;
-  }
+  .btn:hover { background: var(--blue-hover); }
+  .btn-small { font-size: 0.875rem; padding: 0.6rem 1.15rem; }
 
   /* ---------- hero ---------- */
   .hero {
     position: relative;
-    padding: clamp(5rem, 14vh, 9rem) 0 clamp(4rem, 10vh, 6.5rem);
-    border-bottom: 1px solid var(--hairline);
+    background: var(--navy);
+    color: var(--on-navy);
+    padding-block: clamp(3.5rem, 9vw, 6.5rem) clamp(3rem, 6vw, 4.5rem);
     overflow: hidden;
   }
   .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(90% 75% at 50% -12%,
-      rgba(110, 155, 255, 0.17),
-      rgba(110, 155, 255, 0.05) 45%,
-      transparent 72%);
-    opacity: var(--cone-opacity);
-    transition: opacity 0.6s ease;
-    pointer-events: none;
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(70% 90% at 12% -20%, rgba(110, 155, 255, 0.2), rgba(110, 155, 255, 0.05) 48%, transparent 72%);
   }
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(90% 75% at 50% -12%,
-      rgba(242, 169, 59, 0.22),
-      rgba(242, 169, 59, 0.07) 45%,
-      transparent 72%);
-    opacity: var(--wash-opacity);
-    transition: opacity 0.6s ease;
-    pointer-events: none;
-  }
-  .hero .container { position: relative; z-index: 1; }
-
-  .eyebrow { margin-bottom: 1.4rem; }
-  .eyebrow .sep { color: var(--accent-bright); }
-
-  .editorial {
-    font-family: "Newsreader", Georgia, serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-
+  .hero .wrap { position: relative; }
   h1 {
-    font-family: "Newsreader", Georgia, serif;
-    font-optical-sizing: auto;
-    font-size: clamp(2.6rem, 7vw, 4.8rem);
-    font-weight: 480;
-    line-height: 1.02;
-    letter-spacing: -0.015em;
-    max-width: 21ch;
+    font-weight: 420;
+    font-size: clamp(2.35rem, 6.1vw, 4.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
   }
-  h1 em, .lede em, .prose em {
-    font-style: italic;
-    color: var(--accent-bright);
+  h1 span { display: block; text-wrap: balance; }
+  h1 span + span { margin-top: 0.14em; }
+  h1 em { font-style: normal; color: var(--blue-lt); white-space: nowrap; }
+  .lede {
+    margin-top: clamp(1.5rem, 3vw, 2.1rem);
+    max-width: 39rem;
+    font-size: clamp(1.2rem, 1.75vw, 1.4rem);
+    line-height: 1.45;
+    color: var(--on-navy-soft);
   }
+  .actions {
+    margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+    display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.75rem;
+  }
+  .text-link {
+    font-family: var(--sans); font-weight: 500; font-size: 0.975rem;
+    color: var(--on-navy); text-decoration: underline;
+    text-decoration-color: rgba(238, 241, 247, 0.4);
+    text-decoration-thickness: 1px; text-underline-offset: 0.3em;
+  }
+  .text-link:hover { text-decoration-color: var(--blue-lt); }
 
-  .hero .lede {
-    margin-top: 1.7rem;
-    max-width: 50ch;
-    font-family: "Newsreader", Georgia, serif;
-    font-optical-sizing: auto;
-    font-size: clamp(1.15rem, 1.8vw, 1.32rem);
-    line-height: 1.55;
-    color: var(--muted);
+  /* ---------- film: sits across the edge where the navy ends ---------- */
+  .film { background: linear-gradient(to bottom, var(--navy) 0, var(--navy) 34%, var(--paper) 34%); }
+  .film video {
+    display: block; width: 100%; height: auto; aspect-ratio: 16 / 9;
+    background: #E4E9F1;
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px rgba(17, 26, 41, 0.14), 0 30px 70px -22px rgba(4, 9, 20, 0.55);
   }
-
-  .cta-row {
-    margin-top: 2.4rem;
-    display: flex;
-    align-items: center;
-    gap: 1.6rem;
-    flex-wrap: wrap;
-  }
-  .btn {
-    display: inline-block;
-    background: var(--button);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 0.78rem 1.7rem;
-    border-radius: 999px;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-  }
-  .btn:hover { background: var(--button-hover); transform: translateY(-1px); }
-  .btn:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
-
-  .quiet-link {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 0.95rem;
-    border-bottom: 1px solid var(--hairline);
-    padding-bottom: 2px;
-    transition: border-color 0.2s ease;
-  }
-  button.quiet-link {
-    appearance: none;
-    -webkit-appearance: none;
-    background: none;
-    border: none;
-    border-bottom: 1px solid var(--hairline);
-    border-radius: 0;
-    font: inherit;
-    font-size: 0.95rem;
-    line-height: inherit;
-    cursor: pointer;
-    padding: 0 0 2px;
-    text-align: left;
-  }
-  .quiet-link:hover { border-color: var(--accent-bright); }
-  .quiet-link:focus-visible {
-    outline: 2px solid var(--accent-bright);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
-
-  .floor-status {
-    margin-top: clamp(3rem, 8vh, 5rem);
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-  }
-  .floor-status .pip {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent-bright);
-    box-shadow: 0 0 8px 1px rgba(110, 155, 255, 0.6);
-    flex: none;
-  }
-  html[data-lights="on"] .floor-status .pip {
-    background: var(--tungsten);
-    box-shadow: 0 0 8px 1px rgba(242, 169, 59, 0.55);
-  }
-
-  /* ---------- sections ---------- */
-  section { padding: clamp(4rem, 10vw, 6.5rem) 0; }
-
-  .split {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: clamp(1.5rem, 4vw, 4rem);
-  }
-  .split .label { padding-top: 0.5rem; }
-
-  h2 {
-    font-family: "Newsreader", Georgia, serif;
-    font-optical-sizing: auto;
-    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1.12;
-    max-width: 24ch;
-  }
-  .prose {
-    margin-top: 1.3rem;
-    max-width: 58ch;
-    font-family: "Newsreader", Georgia, serif;
-    font-optical-sizing: auto;
-    font-size: 1.16rem;
-    line-height: 1.62;
-    color: var(--muted);
-  }
-  .prose + .prose { margin-top: 1rem; }
-  .prose strong { color: var(--text); font-weight: 560; }
-
-  .shift { border-bottom: 1px solid var(--hairline); }
-
-  /* ---------- offerings ---------- */
-  .build { border-bottom: 1px solid var(--hairline); }
-
-  .bridge {
-    margin-top: 1.1rem;
-    max-width: 76ch;
-    font-family: "Newsreader", Georgia, serif;
-    font-optical-sizing: auto;
-    font-size: 1.08rem;
-    line-height: 1.6;
-    color: var(--muted);
-  }
-  .link-btn {
-    appearance: none;
-    -webkit-appearance: none;
-    background: none;
-    border: none;
-    border-bottom: 1px solid var(--hairline);
-    border-radius: 0;
-    font: inherit;
-    color: var(--text);
-    cursor: pointer;
-    padding: 0 0 1px;
-    text-align: left;
-    transition: border-color 0.2s ease;
-  }
-  .link-btn:hover { border-color: var(--accent-bright); }
-  .link-btn:focus-visible {
-    outline: 2px solid var(--accent-bright);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
-
-  .cards {
-    margin-top: 2.2rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.1rem;
-  }
-  .card {
-    border: 1px solid var(--hairline);
-    border-radius: 12px;
-    background: var(--bg-raised);
-    padding: 1.7rem 1.5rem 1.9rem;
-    transition: background-color 0.5s ease, border-color 0.3s ease;
-  }
-  .card:hover { border-color: color-mix(in srgb, var(--accent-bright) 45%, var(--hairline)); }
-  .card .mono { color: var(--accent-bright); }
-  .card h3 {
+  .film figcaption {
     margin-top: 0.9rem;
-    font-family: "Newsreader", Georgia, serif;
-    font-optical-sizing: auto;
-    font-size: 1.32rem;
+    font-size: 1rem; color: var(--text);
+  }
+
+  /* ---------- sections on paper ---------- */
+  .section { padding-block: clamp(3.75rem, 8vw, 6.5rem); }
+  .section + .section { border-top: 1px solid var(--rule); }
+  /* The example is an aside to the argument, so it gets its own lighter band. */
+  .section.aside { background: #F8FAFC; }
+  @media (min-width: 52.01rem) {
+    .section .cols > :first-child { position: sticky; top: 6.25rem; }
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    column-gap: clamp(2rem, 6vw, 5.5rem);
+    row-gap: 1.75rem;
+    align-items: start;
+  }
+  h2 {
     font-weight: 500;
-    line-height: 1.25;
+    font-size: clamp(1.8rem, 3.3vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.016em;
+    color: var(--ink);
+    text-wrap: balance;
   }
-  .card p {
-    margin-top: 0.7rem;
-    font-size: 0.96rem;
-    color: var(--muted);
+  .prose > * + * { margin-top: 1.1em; }
+  .prose p { max-width: 38rem; }
+  strong, dt, h3 { color: var(--ink); font-weight: 600; }
+
+  /* The handoffs, each a little fainter than the last. */
+  .handoffs {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0;
+    font-size: clamp(1.2rem, 2.1vw, 1.55rem); line-height: 1.3;
+    color: var(--ink);
+    padding-block: 0.35rem 0.5rem;
+  }
+  .handoffs span { white-space: nowrap; }
+  .handoffs span:not(:last-child)::after, .handoffs span:nth-of-type(4)::before {
+    content: ""; display: inline-block; vertical-align: middle;
+    width: clamp(0.9rem, 2.2vw, 1.7rem); height: 1px; margin-inline: 0.5rem;
+    background: currentColor; opacity: 0.55;
+  }
+  .handoffs i { display: none; }
+  .handoffs span:nth-of-type(4)::before { display: none; margin-left: 0; }
+  .handoffs span:nth-of-type(2) { opacity: 0.86; }
+  .handoffs span:nth-of-type(3) { opacity: 0.74; }
+  .handoffs span:nth-of-type(4) { opacity: 0.63; }
+  .handoffs span:nth-of-type(5) { opacity: 0.54; }
+  .handoffs span:nth-of-type(6) { opacity: 0.46; }
+
+  /* ---------- the example: who does what, in order ---------- */
+  .label {
+    font-family: var(--mono); font-weight: 500; font-size: 0.74rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--amber-ink);
+    margin-top: 1rem;
+  }
+  .setup { margin-top: 1rem; max-width: 24rem; }
+  .steps { border-left: 2px solid var(--tungsten); }
+  .steps li {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+    padding: 1.05rem 0 1.05rem 1.5rem;
+  }
+  .steps li + li { border-top: 1px solid var(--rule); }
+  .steps li:first-child { padding-top: 0.2rem; }
+  .steps li:last-child { padding-bottom: 0.2rem; }
+  .who {
+    font-family: var(--sans); font-weight: 600; font-size: 0.92rem; line-height: 1.5;
+    color: var(--ink);
+    padding-top: 0.2rem;
+  }
+  .who.kogent { color: var(--blue); }
+  .steps p { max-width: 31rem; }
+  .result {
+    display: inline-block; margin-top: 0.6rem;
+    font-family: var(--sans); font-weight: 600; font-size: 0.95rem; line-height: 1.35;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--blue);
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
   }
 
-  /* ---------- founder note ---------- */
-  .note { border-bottom: 1px solid var(--hairline); }
-  .note .prose:first-of-type { color: var(--text); }
+  /* ---------- what changes ---------- */
+  .changes > div {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    column-gap: 2rem; row-gap: 0.35rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--rule);
+  }
+  .changes > div:first-child { border-top: 0; padding-top: 0.2rem; }
+  .changes > div:last-child { padding-bottom: 0; }
+  .changes dt { font-size: 1.3rem; line-height: 1.25; letter-spacing: -0.008em; text-wrap: balance; }
 
+  /* ---------- why not what you have now ---------- */
+  .others {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem clamp(1.5rem, 3vw, 2.5rem);
+    margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+  .others > div { border-top: 2px solid var(--ink); padding-top: 0.9rem; }
+  .others h3 { font-size: 1.2rem; line-height: 1.25; margin-bottom: 0.4rem; }
+  .others p { font-size: 1.0625rem; }
 
-  /* ---------- contact ---------- */
-  .contact { text-align: left; }
-  .contact .prose { max-width: 52ch; }
-  .contact .btn { margin-top: 1.9rem; }
+  /* ---------- book a demo ---------- */
+  .demo {
+    background: var(--navy);
+    color: var(--on-navy);
+    padding-block: clamp(4rem, 9vw, 7rem);
+  }
+  .demo .cols { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); align-items: end; }
+  .demo h2 { color: var(--on-navy); font-weight: 420; font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.06; }
+  .demo .sub { margin-top: 1.25rem; color: var(--on-navy-soft); max-width: 33rem; }
+  .book { display: grid; justify-items: start; gap: 0.9rem; }
+  .book .btn { font-size: 1.0625rem; padding: 1rem 2rem; }
+  .book .or { font-size: 1.0625rem; color: var(--on-navy-soft); }
+  .book .address {
+    display: block; color: var(--on-navy);
+    -webkit-user-select: all; user-select: all;
+  }
 
   /* ---------- footer ---------- */
-  footer {
-    border-top: 1px solid var(--hairline);
-    padding: 1.6rem 0 2rem;
+  .site-footer {
+    background: var(--navy);
+    color: var(--on-navy-soft);
+    border-top: 1px solid var(--rule-navy);
+    padding-block: 1.6rem 2.2rem;
+    font-family: var(--sans); font-size: 0.82rem; font-weight: 500;
   }
-  .foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+  .foot { display: flex; align-items: center; flex-wrap: wrap; gap: 0.9rem 1.75rem; }
+  .foot .brand { color: var(--on-navy); font-size: 0.95rem; margin-right: 0; }
+  .foot .brand svg { width: 1.2rem; height: 1.2rem; }
+  .foot nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin-left: auto; }
+  .foot a { text-decoration: none; }
+  .foot nav a:hover, .credit a:hover { color: var(--on-navy); }
+  .credit { flex-basis: 100%; font-weight: 500; color: #8794AA; }
+  .credit a { text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
+
+  /* ---------- smaller screens ---------- */
+  @media (max-width: 60rem) {
+    .others { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  .foot .wordmark span { font-size: 0.92rem; }
-  .foot-links { display: flex; gap: 1.1rem; flex-wrap: wrap; }
-  .foot-links a { color: var(--muted); text-decoration: none; }
-  .foot-links a:hover { color: var(--text); }
-
-  /* ---------- load animation ---------- */
-  @media (prefers-reduced-motion: no-preference) {
-    .hero::before { animation: warmup 1.4s ease; }
-    .hero .eyebrow, .hero h1, .hero p, .hero .cta-row, .hero .floor-status {
-      animation: rise 0.7s ease both;
-    }
-    .hero h1 { animation-delay: 0.08s; }
-    .hero p { animation-delay: 0.16s; }
-    .hero .cta-row { animation-delay: 0.24s; }
-    .hero .floor-status { animation-delay: 0.4s; }
-    @keyframes warmup {
-      from { opacity: 0; }
-      to { opacity: var(--cone-opacity); }
-    }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: none; }
-    }
-
-    .lights.hint { animation: attract 3s ease-in-out infinite; }
-    .lights.hint .lights-dot { animation: dotglow 3s ease-in-out infinite; }
-    @keyframes attract {
-      0%, 100% { border-color: var(--hairline); }
-      50% { border-color: color-mix(in srgb, var(--accent-bright) 65%, var(--hairline)); }
-    }
-    @keyframes dotglow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(110, 155, 255, 0); }
-      50% { box-shadow: 0 0 10px 2px rgba(110, 155, 255, 0.55); }
-    }
+  @media (max-width: 52rem) {
+    .cols, .demo .cols { grid-template-columns: minmax(0, 1fr); }
+    .demo .cols { row-gap: 2.25rem; }
+    .changes > div { grid-template-columns: minmax(0, 1fr); }
+    .setup { max-width: 38rem; }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    ::view-transition-group(*),
-    ::view-transition-old(root),
-    ::view-transition-new(root) { animation: none !important; }
-  }
-
-  @media (max-width: 840px) {
-    .cards { grid-template-columns: 1fr; }
-    .split { grid-template-columns: 1fr; gap: 1rem; }
-  }
-
-  /* ---------- print ---------- */
-  @media print {
-    html[data-lights] {
-      --bg: #FFFFFF;
-      --bg-raised: #FFFFFF;
-      --text: #141D2C;
-      --muted: #3D4757;
-      --hairline: rgba(20, 29, 44, 0.28);
-      --accent-bright: #2F66D3;
-      --cone-opacity: 0;
-      --wash-opacity: 0;
-    }
-    body { background: #FFFFFF; color: #141D2C; }
-    header, .cta-row, .bridge { display: none !important; }
-    section { padding: 1.5rem 0; }
-    .hero { padding: 0 0 1.5rem; }
-    .card { break-inside: avoid; }
+  @media (max-width: 40rem) {
+    body { font-size: 1.125rem; }
+    .nav { display: none; }
+    h1 span:first-child { text-wrap: wrap; }
+    .handoffs i { display: block; flex-basis: 100%; height: 0; }
+    .handoffs span:nth-of-type(3)::after { display: none; }
+    .handoffs span:nth-of-type(4)::before { display: inline-block; }
+    .film { background: linear-gradient(to bottom, var(--navy) 0, var(--navy) 26%, var(--paper) 26%); }
+    .film video { border-radius: 10px; }
+    .steps li { grid-template-columns: minmax(0, 1fr); row-gap: 0.15rem; padding-left: 1.1rem; }
+    .others { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .foot nav { margin-left: 0; flex-basis: 100%; }
   }
 </style>
 </head>
 <body>
 
-<p class="sr-only" id="lights-announce" role="status" aria-live="polite"></p>
+<a class="skip" href="#main">Skip to the page</a>
 
-<header>
-  <div class="container bar">
-    <a class="wordmark" href="/" aria-label="Kogent home">
-      <img src="/logo.png" alt="" width="24" height="27">
-      <span>Kogent</span>
+<header class="site-header on-navy">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Kogent home">
+      <svg viewBox="0 0 266 266" aria-hidden="true"><defs><mask id="kg-gap-1" maskUnits="userSpaceOnUse" x="0" y="0" width="266" height="266"><rect width="266" height="266" fill="#fff"/><path d="M160.5 118.5 L130 156.25 L160.5 194" fill="none" stroke="#000" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/></mask></defs><polygon points="133,23.312 227.997,78.156 227.997,187.844 133,242.688 38.003,187.844 38.003,78.156" fill="#2F66D3" stroke="#2F66D3" stroke-width="36" stroke-linejoin="round"/><path d="M110 66.5 L110 194" fill="none" stroke="#fff" stroke-width="31" stroke-linecap="round" mask="url(#kg-gap-1)"/><path d="M160.5 118.5 L130 156.25 L160.5 194" fill="none" stroke="#fff" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Kogent
     </a>
-    <button class="lights" id="lights" data-lights-toggle aria-pressed="false">
-      <span class="lights-word"><span data-mode="off">Lights off</span><span data-mode="on">Lights on</span></span>
-      <span class="lights-track"><span class="lights-dot"></span></span>
-    </button>
+    <nav class="nav" aria-label="On this page">
+      <a href="#example">How it works</a>
+      <a href="#changes">What changes</a>
+    </nav>
+    <a class="btn btn-small" href="#demo" data-book>Book a demo</a>
   </div>
 </header>
 
-<main>
-  <section class="hero">
-    <div class="container">
-      <p class="eyebrow mono"><span data-mode="off">The factory floor</span><span data-mode="on">Control room</span> <span class="sep">·</span> agentic engineering era</p>
+<main id="main">
 
-      <h1 data-mode="off">The dark factory stops for one thing: <em>context</em>.</h1>
-      <h1 data-mode="on">The lights come on for two things: <em>requirements</em> and <em>taste</em>.</h1>
-
-      <p class="lede" data-mode="off">A fleet of coding agents can run from intake to pull request with nobody in the loop. Ours does it by refusing to start on a thin specification, writing an acceptance test per criterion and proving each one fails before the change exists, then handing the model the spec and none of the gates it has to pass. The <em>context</em> is what makes that possible.</p>
-      <p class="lede" data-mode="on">What is left for people once agents take the typing is narrow and hard: saying precisely what to build, and judging whether what came back is any <em>good</em>. Kogent builds the instruments for those two jobs, at the speed a fleet runs.</p>
-
-      <div class="cta-row">
-        <a class="btn" href="mailto:pratul@kogent.ai">Talk to us</a>
-        <a class="quiet-link" href="#what-we-build"><span data-mode="off">What we build</span><span data-mode="on">Where you come in</span></a>
-        <button class="quiet-link" data-lights-toggle>
-          <span data-mode="off">Turn the lights on. See where you come in.</span>
-          <span data-mode="on">Turn the lights off. See what runs without you.</span>
-        </button>
+  <section class="hero on-navy">
+    <div class="wrap">
+      <h1><span>Your <em>domain experts</em> deliver enterprise software.</span><span>Your <em>engineers</em> set the rules.</span></h1>
+      <p class="lede">Kogent lets the people who know your business take a software change from idea to release themselves, in your own software, under the standards and approvals your engineers set.</p>
+      <div class="actions">
+        <a class="btn" href="#demo" data-book>Book a demo</a>
+        <a class="text-link" href="#film">Watch the 30-second film</a>
       </div>
-
-      <p class="floor-status mono"><span class="pip" aria-hidden="true"></span><span data-mode="off">Lights off · the line is running</span><span data-mode="on">Lights on · the line is waiting on you</span></p>
     </div>
   </section>
 
-  <section class="shift">
-    <div class="container split">
-      <p class="label mono"><span data-mode="off">The shift</span><span data-mode="on">The bottleneck</span></p>
+  <section class="film" id="film" aria-label="Kogent in 30 seconds">
+    <div class="wrap">
+      <figure>
+        <video controls preload="none" playsinline poster="/media/poster.jpg" width="1920" height="1080">
+          <source src="/media/kogent-overview.mp4" type="video/mp4">
+          <a href="/media/kogent-overview.mp4">Download the 30-second film (MP4, 4.6 MB)</a>
+        </video>
+        <figcaption>Kogent in 30 seconds, on real screens from the product. Narrated, so turn the sound on.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="cost">
+    <div class="wrap cols">
+      <h2>What waiting costs you today</h2>
+      <div class="prose">
+        <p>Every change to your business software queues behind engineering, even a small one. On the way it is handed from one step to the next, and some of the meaning is lost each time.</p>
+        <p class="handoffs" role="img" aria-label="Ticket, then document, then design, then code, then test, then release."><span>ticket</span><span>document</span><span>design</span><i></i><span>code</span><span>test</span><span>release</span></p>
+        <p>What comes back is late, and not quite what was asked for. Your engineers spend their days translating and coordinating instead of engineering. In a regulated firm, the record of who asked, what was checked and who approved is rebuilt by hand before every audit.</p>
+        <p><strong>AI has not fixed this.</strong> It made the coding faster. Everything around the code still waits.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section aside" id="example">
+    <div class="wrap cols">
       <div>
-        <h2 data-mode="off">Software production is going&nbsp;dark.</h2>
-        <h2 data-mode="on">The bottleneck moved off the&nbsp;keyboard.</h2>
+        <h2>How one change goes with Kogent</h2>
+        <p class="label">An example, not a customer</p>
+        <p class="setup">A finance operations lead has to raise an expense-approval limit and add one rule: nobody approves their own claim.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <p class="who">The finance lead</p>
+          <p>She writes the change in her own words.</p>
+        </li>
+        <li>
+          <p class="who kogent">Kogent</p>
+          <p>It drafts the checks that will show the change works, and asks her one question about a case she had not covered.</p>
+        </li>
+        <li>
+          <p class="who kogent">AI agents</p>
+          <p>They build the change and test it against those checks.</p>
+        </li>
+        <li>
+          <p class="who">The finance lead</p>
+          <p>She reads, in plain words, what was checked and what was not.<br><span class="result">4 of 5 checks proven; 1 was never checked.</span></p>
+        </li>
+        <li>
+          <p class="who">A second person</p>
+          <p>Someone else approves the release to production.</p>
+        </li>
+        <li>
+          <p class="who">The auditor</p>
+          <p>Asks who approved it and what was tested. The answer is already on record.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
 
-        <div data-mode="off">
-          <p class="prose">Fleets of coding agents now write, test, review, and ship around the clock while people move from the line to the control room. That's the <strong>dark factory pattern</strong>. It usually breaks somewhere less interesting than the tooling: the run reaches a question the specification never answered, and there is nobody on the floor to answer it.</p>
-          <p class="prose">The answers almost always exist somewhere. They're in one engineer's head, or in a chat thread from March that nobody exports, or in the corner of the domain that only the person who left last spring ever really understood. Each of those gaps surfaces as a question mid-run, and <strong>every question turns the lights back on</strong>.</p>
+  <section class="section" id="changes">
+    <div class="wrap cols">
+      <h2>What changes</h2>
+      <dl class="changes">
+        <div>
+          <dt>Your experts deliver the change.</dt>
+          <dd>The people who know the business take it from idea to release themselves, with no ticket queue.</dd>
         </div>
+        <div>
+          <dt>Engineers set the rules, and stop being the bottleneck.</dt>
+          <dd>Standards they confirm can go into every build. You choose which approvals need a person; production always needs one from someone else.</dd>
+        </div>
+        <div>
+          <dt>Everyone sees what was checked.</dt>
+          <dd>And what was not. Each result says so in plain words, so the person who asked can judge it.</dd>
+        </div>
+        <div>
+          <dt>The record builds itself.</dt>
+          <dd>Checks, reviews and approvals are recorded as the work happens. One click exports a release's evidence.</dd>
+        </div>
+        <div>
+          <dt>Spend and progress stay in view.</dt>
+          <dd>An owner can set a monthly limit on AI spend, and your whole product is on one page.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
 
-        <div data-mode="on">
-          <p class="prose">Agents write, test, and review faster than a team can read the output. Delivery has barely moved, because the work that actually gates a release sits on either side of the keyboard: deciding precisely what to build, and working out what to make of what came back.</p>
-          <p class="prose">A gate can prove a change matches its specification. No gate can tell you the specification was worth writing, or that the result is any good. That judgement stays with you. Lights that come on because a question went unanswered are a <strong>failure</strong>. Lights on because it is your turn are the <strong>design</strong>.</p>
+  <section class="section" id="alternatives">
+    <div class="wrap">
+      <h2>Why not what you have now</h2>
+      <div class="others">
+        <div>
+          <h3>Tools stitched together</h3>
+          <p>Every handoff between them is a place where meaning is lost, and the record ends up scattered.</p>
+        </div>
+        <div>
+          <h3>AI coding tools</h3>
+          <p>They serve engineers and speed up one step: writing the code.</p>
+        </div>
+        <div>
+          <h3>AI app builders</h3>
+          <p>They make a new app fast, outside your systems and your rules.</p>
+        </div>
+        <div>
+          <h3>Agencies and outsourcing</h3>
+          <p>Each change is a quote and a wait, and the knowledge leaves with them.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="build" id="what-we-build">
-    <div class="container">
-      <p class="label mono"><span data-mode="off">What we build</span><span data-mode="on">Where you come in</span></p>
-
-      <p class="bridge">
-        <span data-mode="off">This is the half that runs without you. </span>
-        <span data-mode="on">This is the half that needs you. </span>
-        <button class="link-btn" data-lights-toggle>
-          <span data-mode="off">Turn the lights on for the other half.</span>
-          <span data-mode="on">Turn the lights off for the other half.</span>
-        </button>
-      </p>
-
-      <div class="cards" data-mode="off">
-        <div class="card">
-          <p class="mono">Context supply</p>
-          <h3>Everything the factory needs to know</h3>
-          <p>Intent, decisions, constraints and domain knowledge, captured once and kept current in a form an agent reads without asking anyone. Each item stays traceable to where it came from, so a run that leans on a decision can cite it.</p>
-        </div>
-        <div class="card">
-          <p class="mono">Verification</p>
-          <h3>Proof the change matches the spec, before anyone looks</h3>
-          <p>An acceptance test per criterion, authored before the change and proven to fail against the untouched repository. The model that writes the change never sees them. Anything touching tests, CI configuration or a lockfile is routed to a person.</p>
-        </div>
-        <div class="card">
-          <p class="mono">Unattended operation</p>
-          <h3>It runs dark until it needs you</h3>
-          <p>Intake, generation, verification and repair proceed with nobody in the loop. The run stops at the review gate and waits there. A pull request opens once someone has approved the review and the run's own verdict is a pass.</p>
-        </div>
-      </div>
-
-      <div class="cards" data-mode="on">
-        <div class="card">
-          <p class="mono">Requirements</p>
-          <h3>Say what to build, precisely enough</h3>
-          <p>Your intent becomes a specification with criteria a machine can hold you to. A spec with nothing testable in it, too many requirements without a check, or a sentence still waiting on your choice is refused before a run starts. The refusal is code, not a model's opinion of your work.</p>
-        </div>
-        <div class="card">
-          <p class="mono">Product direction</p>
-          <h3>Decide before the first agent runs</h3>
-          <p>Story maps of the journeys you are building for, and positioning and decision pages written from your own documents, each one citing the source it came from. You settle what is worth building while changing your mind is still cheap.</p>
-        </div>
-        <div class="card">
-          <p class="mono">Knowledge work</p>
-          <h3>The record the factory reads and writes</h3>
-          <p>Decisions, domain knowledge and the documents that carry them, kept as durable artifacts rather than chat history. Every run is stored as a replayable record and the audit log is hash-chained with signed checkpoints, so the question of why the agent did that still has an answer six months later.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="note">
-    <div class="container split">
-      <p class="label mono">From the founder</p>
+  <section class="demo on-navy" id="demo">
+    <div class="wrap cols">
       <div>
-        <h2>Some things the pitch leaves&nbsp;out.</h2>
-
-        <p class="prose">I'm Pratul. I build Kogent and I write this site, so the caveats may as well come from me. Kogent will not make your engineers faster at writing code. Plenty of tools already do that. The work here is the specification going in and the judgement coming out.</p>
-
-        <p class="prose">One run, 14 July. I pointed the factory at a public fork of the Angular RealWorld app, a codebase nobody here had written, and asked for estimated reading time on articles. Five acceptance criteria. It came back with twenty-four lines in one file, having worked out that the article page and the feed cards share a meta component, and it cleared the repo's own 180 tests in a separate sandbox. I read the diff, approved it, and merged PR #5 forty-two seconds later.</p>
-
-        <p class="prose">Signature enforcement ships off by default. We are aligned with 21 CFR Part 11 and we are not a validated Part 11 package. The full trust posture, including what is not built, ships as product documentation. Ask and we will send it.</p>
+        <h2>We'd love to show you Kogent on one of your own changes.</h2>
+        <p class="sub">Book a demo to get started. Bring a change that has been waiting, and we will walk through it with you.</p>
+      </div>
+      <div class="book">
+        <!--
+          BOOKING LINK: this href is the one place it lives.
+          To move to a scheduling page, replace the mailto: below with the Cal.com or
+          Calendly URL (for example https://cal.com/kogent/demo). The "Book a demo"
+          buttons in the header and the hero point at this section; once this href is
+          a web address, the script at the end of the page sends them straight to it.
+        -->
+        <a class="btn" id="booking-link" href="https://bookings.cloud.microsoft/book/Kogentdemo@NETORGFT11076480.onmicrosoft.com/s/Pl3Xvf8pmEm_tVr_XqDykA2">Book a demo</a>
+        <p class="or">Or write to us at <span class="address">pratul@kogent.ai</span></p>
       </div>
     </div>
   </section>
 
-  <section class="contact">
-    <div class="container">
-      <p class="label mono">Get in touch</p>
-      <h2 style="margin-top: 1rem;" data-mode="off">Where does your factory still&nbsp;stop?</h2>
-      <h2 style="margin-top: 1rem;" data-mode="on">What is your factory waiting on you&nbsp;for?</h2>
-      <p class="prose" data-mode="off">Tell me where your agents stop and wait on a person. I'll tell you which of those gaps context can close, and which ones are going to stay yours.</p>
-      <p class="prose" data-mode="on">Tell me where the answer still has to come from a person. I'll tell you what to hand the line instead so it stops asking you.</p>
-      <a class="btn" href="mailto:pratul@kogent.ai">pratul@kogent.ai</a>
-    </div>
-  </section>
 </main>
 
-<footer>
-  <div class="container foot">
-    <a class="wordmark" href="/" aria-label="Kogent home">
-      <img src="/logo.png" alt="" width="18" height="20">
-      <span>Kogent</span>
+<footer class="site-footer on-navy">
+  <div class="wrap foot">
+    <a class="brand" href="/" aria-label="Kogent home">
+      <svg viewBox="0 0 266 266" aria-hidden="true"><defs><mask id="kg-gap-2" maskUnits="userSpaceOnUse" x="0" y="0" width="266" height="266"><rect width="266" height="266" fill="#fff"/><path d="M160.5 118.5 L130 156.25 L160.5 194" fill="none" stroke="#000" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/></mask></defs><polygon points="133,23.312 227.997,78.156 227.997,187.844 133,242.688 38.003,187.844 38.003,78.156" fill="#2F66D3" stroke="#2F66D3" stroke-width="36" stroke-linejoin="round"/><path d="M110 66.5 L110 194" fill="none" stroke="#fff" stroke-width="31" stroke-linecap="round" mask="url(#kg-gap-2)"/><path d="M160.5 118.5 L130 156.25 L160.5 194" fill="none" stroke="#fff" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Kogent
     </a>
-    <p class="mono">© 2026 Kogent · now building for the agentic engineering era</p>
-    <nav class="foot-links mono" aria-label="Legal">
+    <span>© 2026 Kogent</span>
+    <nav aria-label="Legal and support">
       <a href="/privacy/">Privacy</a>
       <a href="/support/">Support</a>
       <a href="/account-deletion/">Delete account</a>
     </nav>
+    <p class="credit">Illustrations by <a href="https://storyset.com/" rel="noopener">Storyset</a></p>
   </div>
 </footer>
 
 <script>
+  // Optional: when the booking link is a scheduling page (not mailto:), the other
+  // "Book a demo" buttons go straight to it. Without this script they scroll to the demo section.
   (function () {
-    var root = document.documentElement;
-    var toggles = document.querySelectorAll("[data-lights-toggle]");
-    var announce = document.getElementById("lights-announce");
-
-    // Treat a storage throw as "key present" so the hint never shows and can
-    // never take down the toggle it advertises.
-    var seen = true;
-    try { seen = localStorage.getItem("kogent-lights") !== null; } catch (e) { seen = true; }
-
-    function render() {
-      var on = root.dataset.lights === "on";
-      for (var i = 0; i < toggles.length; i++) {
-        if (toggles[i].hasAttribute("aria-pressed")) {
-          toggles[i].setAttribute("aria-pressed", String(on));
-        }
-      }
-    }
-
-    function apply(next) {
-      root.dataset.lights = next;
-      try { localStorage.setItem("kogent-lights", next); } catch (e) {}
-      render();
-    }
-
-    function toggle() {
-      var next = root.dataset.lights === "on" ? "off" : "on";
-      var reduce = window.matchMedia
-        && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (document.startViewTransition && !reduce) {
-        document.startViewTransition(function () { apply(next); });
-      } else {
-        apply(next);
-      }
-
-      if (announce) {
-        announce.textContent = next === "on"
-          ? "Lights on. Showing the half of the offering that needs you."
-          : "Lights off. Showing the half of the offering that runs without you.";
-      }
-
-      var hinted = document.querySelectorAll(".hint");
-      for (var i = 0; i < hinted.length; i++) hinted[i].classList.remove("hint");
-    }
-
-    if (!seen) {
-      var header = document.getElementById("lights");
-      if (header) header.classList.add("hint");
-    }
-
-    for (var i = 0; i < toggles.length; i++) {
-      toggles[i].addEventListener("click", toggle);
-    }
-    render();
+    var link = document.getElementById("booking-link");
+    if (!link || !/^https?:/i.test(link.getAttribute("href") || "")) return;
+    var others = document.querySelectorAll("[data-book]");
+    for (var i = 0; i < others.length; i++) others[i].setAttribute("href", link.href);
   })();
 </script>
 
