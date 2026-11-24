@@ -280,9 +280,13 @@
 
     <h2>This website</h2>
     <p>
-      kogent.ai is a static site hosted on GitHub Pages. It sets no cookies and runs
-      no analytics. Its fonts load from Google Fonts, so Google receives your IP
-      address when a page loads.
+      kogent.ai is a static site hosted on GitHub Pages. It sets no cookies. To count
+      visits, it uses Cloudflare Web Analytics, which also sets no cookies and does not
+      follow you from site to site. When a page loads, Cloudflare receives the page
+      address, the page you came from, your browser and device type, and your IP
+      address, which it uses to estimate your country. We see only totals, such as
+      visits to each page, never who you are. The site's fonts load from Google Fonts,
+      so Google also receives your IP address when a page loads.
     </p>
     <p>
       If you book a demo, the booking page is Microsoft Bookings, part of our
@@ -335,5 +339,7 @@
 </footer>
 
 
+  <!-- Cloudflare Web Analytics: counts visits with no cookies (see /privacy/) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "41cdb2f81a7c48288cb1ca7c235f0350"}'></script>
 </body>
 </html>
